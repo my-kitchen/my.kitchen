@@ -4,6 +4,24 @@ module.exports = function(grunt) {
 
   // Project configuration
   var config = {
+    karma: {
+      unit: {
+        configFile: './test/client/karma-unit.conf.js',
+        autoWatch: false,
+        singleRun: true,
+      },
+      midway: {
+        configFile: './test/client/karma-midway.conf.js',
+        autoWatch: false,
+        singleRun: true,
+      },
+      e2e: {
+        configFile: './test/client/karma-e2e.conf.js',
+        autoWatch: false,
+        singleRun: true,
+      },
+    },
+
     watch: {
       jsclient: {
         files: 'client/js/**/*.js',
