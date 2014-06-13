@@ -4,6 +4,15 @@ module.exports = function(grunt) {
 
   // Project configuration
   var config = {
+    env : {
+      dev : {
+        NODE_ENV: 'development',
+      },
+      test : {
+        NODE_ENV: 'test',
+      },
+    },
+
     karma: {
       unit: {
         configFile: 'test/client/karma-unit.conf.js',
@@ -118,7 +127,7 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('start', 'concurrent:watchAndServe');
+  grunt.registerTask('start', ['env:dev', 'concurrent:watchAndServe']);
   grunt.registerTask('test', function(name, reporter) {
     var tasks = [];
     var mocha = false;
@@ -161,6 +170,8 @@ module.exports = function(grunt) {
         reporter: reporter,
       });
     }
+
+    tasks.unshift('env:test');
 
     grunt.task.run(tasks);
   });

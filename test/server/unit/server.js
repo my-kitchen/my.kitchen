@@ -1,7 +1,14 @@
 'use strict';
 
 var h = require('..');
-h.r42.inject(function (/*!lib*/ app) {
+var unit = h.r42.createSub({
+  paths: {
+    express: 'mock/express',
+    fs: 'mock/fs',
+    path: 'mock/path',
+  }
+});
+unit.inject(function (/*!lib*/ app, express) {
 
   describe('Server', function() {
     it('exist', function() {
@@ -14,9 +21,14 @@ h.r42.inject(function (/*!lib*/ app) {
 
     it('is initialized with a configuration without error', function() {
       var fn = function() {
-        app(h.app);
+        app(h.config.app);
       };
-      expect(fn).to.not.throw;
+      expect(fn).to.not.throw();
+    });
+
+    it('instanciate an express app', function() {
+      app(h.config.app);
+      expect(express.withNew).to.be.true; 
     });
   });
 });
