@@ -1,3 +1,5 @@
+'use strict';
+
 describe("E2E: Testing Requests", function() {
 
   beforeEach(function() {

@@ -14,6 +14,5 @@ $ cd my.kitchen
 $ sudo npm -g install grunt-cli bower
 $ npm install
 $ bower install
-$ cp server config.js.dist config.js
 $ grunt
 ```

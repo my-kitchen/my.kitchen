@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function() {
   return {
     basePath: '../../',
@@ -34,6 +36,6 @@ module.exports = function() {
       //Test-Specific Code
       'node_modules/chai/chai.js',
       //'test/lib/chai-expect.js'
-    ]
-  }
+    ],
+  };
 };
