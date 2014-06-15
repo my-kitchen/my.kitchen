@@ -17,9 +17,7 @@ global.expect = chai.expect;
  * @param [last=true] {Boolean} define if the dotry is called
  *   for the last time, so done can be called
  */
-Function.prototype.dotry = function(done, last) {
-  var fn = this;
-
+var dotry = function(fn, done, last) {
   if (_.isUndefined(last)) {
     last = true;
   }
@@ -51,13 +49,25 @@ module.exports = {
   config: config,
   sinon: {
     spy: function(object, methodName) {
-      return sinon.spy(object, methodName);
+      return function() {
+        if (_.isFunction(object)) {
+          object = object();
+        }
+
+        sinon.spy(object, methodName);
+      };
     },
     restore: function(object, methodName) {
-      if (!object[methodName].restore) {
-        return;
-      }
-      object[methodName].restore();
+      return function() {
+        if (_.isFunction(object)) {
+          object = object();
+        }
+        
+        if (!object[methodName].restore) {
+          return;
+        }
+        object[methodName].restore();
+      };
     },
   },
   oh: {
@@ -66,4 +76,5 @@ module.exports = {
       return new (Function.prototype.bind.apply(Ctor, arguments));
     },
   },
+  dotry: dotry,
 };
