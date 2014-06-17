@@ -1,12 +1,14 @@
 'use strict';
 
+var baseDir = __dirname;
 module.exports = {
   app: {
     fakeApi: false,
+    baseDir: baseDir,
   },
 
   r42: {
-    baseDir: __dirname,
+    baseDir: baseDir,
     require: require,
 
     paths: {

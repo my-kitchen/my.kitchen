@@ -9,6 +9,12 @@ chai.config.includeStack = true;
 chai.use(require('sinon-chai'));
 global.expect = chai.expect;
 
+// load r42 custom spy loader
+var r42 = require('r42');
+r42.registerLoader('spy', function(moduleDef, parent, mc) {
+  mc.initModule(moduleDef, sinon.spy());
+});
+
 /**
  * Allow to handle thrown exceptions during
  * sync-ed tests, handling done call
@@ -34,6 +40,29 @@ var dotry = function(fn, done, last) {
   };
 };
 
+var newApply = function(Ctor, args) {
+  Array.prototype.unshift.call(args, Ctor);
+  return new (Function.prototype.bind.apply(Ctor, arguments));
+};
+
+var reset = function(obj) {
+  _.forOwn(obj, function(val) {
+    if (!val) {
+      return;
+    }
+
+    if (val.reset && _.isFunction(val.reset)) {
+      val.reset();
+      return;
+    }
+
+    if (_.isObject(val)) {
+      reset(val);
+    }
+  });
+};
+
+// configuration and r42 in test
 var config = require('../../server/config');
 
 _.merge(config.r42, {
@@ -42,39 +71,14 @@ _.merge(config.r42, {
     mock: path.join(config.r42.baseDir, '../test/server/mock'),
   },
 });
+var r42 = r42.config(config.r42);
 
-var r42 = require('r42').config(config.r42);
+// export helper object
 module.exports = {
   r42: r42,
   config: config,
-  sinon: {
-    spy: function(object, methodName) {
-      return function() {
-        if (_.isFunction(object)) {
-          object = object();
-        }
-
-        sinon.spy(object, methodName);
-      };
-    },
-    restore: function(object, methodName) {
-      return function() {
-        if (_.isFunction(object)) {
-          object = object();
-        }
-        
-        if (!object[methodName].restore) {
-          return;
-        }
-        object[methodName].restore();
-      };
-    },
-  },
-  oh: {
-    newApply: function(Ctor, args) {
-      Array.prototype.unshift.call(args, Ctor);
-      return new (Function.prototype.bind.apply(Ctor, arguments));
-    },
-  },
+  sinon: sinon,
+  newApply: newApply,
   dotry: dotry,
+  reset: reset,
 };

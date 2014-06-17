@@ -1,10 +1,11 @@
 'use strict';
 
-//var sinon = require('sinon');
-//var _ = require('lodash');
-//var h = require('..');
-
 var Request = function() {
+  this.params = {
+    '0': 'param1',
+    '1': 'param2',
+  };
+  this.method = 'GET';
 };
 
 module.exports = Request;

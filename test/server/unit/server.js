@@ -4,14 +4,16 @@ var h = require('..');
 var unit = h.r42.createSub({
   paths: {
     express: 'mock/express',
-    fs: 'mock/fs',
-    path: 'mock/path',
-  }
+    'lib/route': 'spy!route',
+  },
 });
-unit.inject(function (/*!lib*/ appFn, express) {
+unit.inject(function (_, /*!lib*/ appFn, express, /*!lib/route*/ routes) {
 
   describe('Server', function() {
-    var appInst;
+    beforeEach(function() {
+      express.reset();
+      routes.reset();
+    });
 
     it('exist', function() {
       expect(appFn).to.exist;
@@ -21,26 +23,19 @@ unit.inject(function (/*!lib*/ appFn, express) {
       expect(appFn).to.be.a('Function');
     });
 
-    it('is initialized with a configuration without error', function() {
-      var fn = function() {
-        appInst = appFn(h.config.app);
-      };
-      expect(fn).to.not.throw();
-    });
-
     it('instanciate an express app', function() {
+      appFn(h.config.app);
       expect(express).to.have.been.calledWithNew; 
     });
 
-    it('return the express app', function() {
-      expect(appInst).to.be.an.instanceof(express);
+    it('call the routes, with the app and the config', function() {
+      appFn(h.config.app);
+      expect(routes).to.have.been.calledOnce
+        .and.calledWith(express.$i, h.config.app);
     });
 
-    describe('not in fakeApi conf', function() {
-      it('register a ALL /api/ route', function() {
-        expect(express.$i.all).to.have.been.calledOnce
-          .and.calledWith('/api/*');
-      });
+    it('return the express app', function() {
+      expect(appFn(h.config.app)).to.be.an.instanceof(express);
     });
   });
 });

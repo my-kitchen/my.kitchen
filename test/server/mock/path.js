@@ -1,3 +1,9 @@
 'use strict';
 
-module.exports = {};
+var sinon = require('sinon');
+
+var path = {};
+
+path.join = sinon.stub().returns('right/path');
+
+module.exports = path;

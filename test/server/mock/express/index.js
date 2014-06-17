@@ -6,19 +6,35 @@ var h = require('../..');
 
 var Request = require('./request');
 var Response = require('./response');
+var Middleware = require('./middleware');
 
 var Express = function() {
   if (!(this instanceof Express)) {
-    return h.oh.newApply(Express, arguments);
+    return h.newApply(Express, arguments);
   }
 
   Express.called = true;
   Express.$i = this;
+
+  // all
+  var req = new Request();
+  var res = new Response();
+  var next = new Middleware();
+  this.all = sinon.stub().callsArgWith(1, req, res, next);
+  this.all.req = req;
+  this.all.res = res;
+  this.all.next = next;
+
+  // get
+  var req = new Request();
+  var res = new Response();
+  var next = new Middleware();
+  this.get = sinon.stub().callsArgWith(1, req, res, next);
+  this.get.req = req;
+  this.get.res = res;
+  this.get.next = next;
 };
 _.extend(Express, sinon.spy());
 Express.$i = null;
-
-Express.prototype.all = sinon.stub().callsArgWith(1, new Request(), new Response());
-Express.prototype.get = sinon.stub().callsArg(1);
 
 module.exports = Express;
