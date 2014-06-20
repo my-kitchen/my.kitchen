@@ -42,7 +42,7 @@ unit.inject(function (/*!lib/route/clientHtml*/ clientHtmlFn, express, fs, path)
         expect(path.join).to.have.been.calledOnce
           .and.calledWith(
             h.config.r42.baseDir,
-            '../client/html/index.html'
+            '../public/index.html'
           );
       });
 

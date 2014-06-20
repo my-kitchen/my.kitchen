@@ -11,33 +11,39 @@
   "bugs": {
     "url": "hhttps://github.com/my-kitchen/my.kitchen/issues"
   },
-  "license": "BSD",
+  "scripts": {
+    "start": "grunt start"
+  },
   "dependencies": {
-    "express": "~4.4.3",
-    "lodash": "~2.4.1",
-    "moment": "~2.7.0",
-    "r42": "~0.8.0",
-    "uuid": "~1.4.1"
+    "express": "^4.4.3",
+    "lodash": "^2.4.1",
+    "r42": "^0.8.0"
   },
   "devDependencies": {
-    "grunt": "~0.4.5",
+    "grunt": "^0.4.5",
     "grunt-concurrent": "^0.5.0",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-watch": "^0.6.0",
-    "grunt-nodemon": "~0.2.0",
-    "chai": "~1.9.1",
-    "mocha": "~1.20.1",
-    "supertest": "~0.13.0",
-    "grunt-mocha-test": "~0.11.0",
-    "grunt-env": "~0.4.1",
-    "sinon-chai": "~2.5.0",
-    "sinon": "~1.10.2",
-    "protractor": "~0.24.2",
-    "chai-as-promised": "~4.1.1",
-    "grunt-protractor-runner": "~1.0.0",
-    "grunt-contrib-connect": "~0.8.0"
-  },
-  "scripts": {
-    "start": "grunt start"
+    "grunt-nodemon": "^0.2.0",
+    "chai": "^1.9.1",
+    "mocha": "^1.20.1",
+    "supertest": "^0.13.0",
+    "grunt-mocha-test": "^0.11.0",
+    "grunt-env": "^0.4.1",
+    "sinon-chai": "^2.5.0",
+    "sinon": "^1.10.2",
+    "protractor": "^0.24.2",
+    "chai-as-promised": "^4.1.1",
+    "grunt-protractor-runner": "^1.0.0",
+    "grunt-contrib-connect": "^0.8.0",
+    "grunt-contrib-jade": "^0.12.0",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-imagemin": "^0.7.1",
+    "grunt-contrib-copy": "^0.5.0",
+    "grunt-contrib-stylus": "^0.17.0",
+    "grunt-angular-templates": "^0.5.3",
+    "grunt-usemin2": "0.0.5",
+    "grunt-ngmin": "^0.0.3",
+    "grunt-contrib-uglify": "^0.5.0"
   }
 }
