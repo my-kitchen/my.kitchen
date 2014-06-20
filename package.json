@@ -49,6 +49,8 @@
     "grunt-karma": "^0.8.3",
     "karma": "^0.12.16",
     "karma-chrome-launcher": "^0.1.4",
-    "ng-midway-tester": "^2.0.5"
+    "ng-midway-tester": "^2.0.5",
+    "karma-chai": "~0.1.0",
+    "karma-sinon": "~1.0.3"
   }
 }

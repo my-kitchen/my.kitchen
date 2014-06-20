@@ -9,9 +9,6 @@ module.exports = function(config) {
     // extra testing code
     './node_modules/ng-midway-tester/src/ngMidwayTester.js',
 
-    // mocha conf
-    './test/client/mocha.conf.js',
-
     // test files
     './test/client/midway/**/*.js'
   ]);
