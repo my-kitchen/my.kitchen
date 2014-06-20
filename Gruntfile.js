@@ -4,6 +4,16 @@ module.exports = function(grunt) {
 
   // Project configuration
   var config = {
+    connect: {
+      server: {
+        options: {
+          port: 9000,
+          hostname: 'localhost',
+          base: 'client/html',
+        },
+      },
+    },
+
     env : {
       dev : {
         NODE_ENV: 'development',
@@ -13,21 +23,16 @@ module.exports = function(grunt) {
       },
     },
 
-    karma: {
-      unit: {
-        configFile: 'test/client/karma-unit.conf.js',
-        autoWatch: false,
-        singleRun: true,
-      },
-      midway: {
-        configFile: 'test/client/karma-midway.conf.js',
-        autoWatch: false,
-        singleRun: true,
+    protractor: {
+      options: {
+        configFile: './node_modules/protractor/referenceConf.js',
+        keepAlive: true,
+        noColor: false,
       },
       e2e: {
-        configFile: 'test/client/karma-e2e.conf.js',
-        autoWatch: false,
-        singleRun: true,
+        options: {
+          configFile: './test/client/protractor-e2e.conf.js',
+        }
       },
     },
 
@@ -130,42 +135,32 @@ module.exports = function(grunt) {
   grunt.registerTask('start', ['env:dev', 'concurrent:watchAndServe']);
   grunt.registerTask('test', function(name, reporter) {
     var tasks = [];
-    var mocha = false;
 
     if (!name) {
-      tasks = ['karma:e2e', 'karma:midway', 'karma:unit', 'mochaTest:unit', 'mochaTest:func'];
-      mocha = true;
-    } else {
-      switch(name) {
-      case 'e2e' :
-        tasks = ['karma:e2e'];
-        break;
-      case 'midway' :
-        tasks = ['karma:midway'];
-        break;
-      case 'kunit' :
-        tasks = ['karma:unit'];
-        break;
-      case 'client' :
-        tasks = ['karma:e2e', 'karma:midway', 'karma:unit'];
-        break;
-      case 'unit' :
-        tasks = ['mochaTest:unit'];
-        mocha = true;
-        break;
-      case 'func' :
-        tasks = ['mochaTest:func'];
-        mocha = true;
-        break;
-      case 'server' :
-        tasks = ['mochaTest:unit', 'mochaTest:func'];
-        mocha = true;
-        break;
-      default: grunt.error.fail('Unknown action ' + name);
-      }
+      grunt.task.run(['test:client', 'test:server']);
+      return;
     }
 
-    if (mocha && reporter) {
+    switch(name) {
+    case 'e2e' :
+      tasks = grunt.task.run(['connect:server', 'protractor:e2e']);
+      return;
+    case 'client' :
+      grunt.task.run('test:e2e');
+      return;
+    case 'unit' :
+      tasks = ['mochaTest:unit'];
+      break;
+    case 'func' :
+      tasks = ['mochaTest:func'];
+      break;
+    case 'server' :
+      grunt.task.run(['test:unit', 'test:func']);
+      return;
+    default: grunt.error.fail('Unknown action ' + name);
+    }
+
+    if (reporter) {
       grunt.config('mochaTest.options', {
         reporter: reporter,
       });

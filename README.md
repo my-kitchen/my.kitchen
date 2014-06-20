@@ -16,3 +16,9 @@ $ npm install
 $ bower install
 $ grunt
 ```
+
+For testing purpose:
+
+```sh
+./node_modules/protractor/bin/webdriver-manager update
+```
