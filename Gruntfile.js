@@ -140,6 +140,16 @@ module.exports = function(grunt) {
       },
     },
 
+    // client unit test module
+    karma: {
+      kunit: {
+        configFile: './test/client/karma-unit.conf.js',
+      },
+      midway: {
+        configFile: './test/client/karma-midway.conf.js',
+      },
+    },
+
     // for server tests
     mochaTest: {
       func: {
@@ -343,7 +353,7 @@ module.exports = function(grunt) {
   grunt.registerTask('build', ['clean:all', 'concurrent:build', 'ngtemplates', 'usemin2']);
   grunt.registerTask('start', ['build', 'env:dev', 'concurrent:watchAndServe']);
   grunt.registerTask('test', function(name, reporter) {
-    var tasks = ['env:test'];
+    var mochaTasks = ['env:test'];
 
     if (!name) {
       grunt.task.run(['test:client', 'test:server']);
@@ -351,19 +361,26 @@ module.exports = function(grunt) {
     }
 
     switch(name) {
-    case 'e2e' :
-      tasks = grunt.task.run(['build', 'connect:server', 'protractor:e2e']);
+    case 'e2e':
+      grunt.task.run(['build', 'connect:server', 'protractor:e2e']);
       return;
-    case 'client' :
-      grunt.task.run('test:e2e');
+    case 'midway':
+      grunt.task.run('karma:midway');
       return;
-    case 'unit' :
-      tasks.push('mochaTest:unit');
+    case 'kunit':
+      grunt.task.run('karma:kunit');
+      return;
+    break;
+    case 'client':
+      grunt.task.run(['test:e2e', 'test:midway', 'test:kunit']);
+      return;
+    case 'unit':
+      mochaTasks.push('mochaTest:unit');
       break;
-    case 'func' :
-      tasks.push('mochaTest:func');
+    case 'func':
+      mochaTasks.push('mochaTest:func');
       break;
-    case 'server' :
+    case 'server':
       grunt.task.run(['test:unit', 'test:func']);
       return;
     default: grunt.error.fail('Unknown action ' + name);
@@ -375,7 +392,7 @@ module.exports = function(grunt) {
       });
     }
 
-    grunt.task.run(tasks);
+    grunt.task.run(mochaTasks);
   });
 
   grunt.registerTask('default', 'start');
