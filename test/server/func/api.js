@@ -24,13 +24,13 @@ h.r42.inject(function (_, /*!lib*/ app, requestFn, fs, path) {
           .expect('Cache-Control', 'no-cache', done);
       });
 
-      it('expose client/html/index.html', function(done) {
+      it('expose public/index.html', function(done) {
         request
           .get('/')
           .expect('Content-Type', 'text/html')
           .end(h.dotry(function(err, res) {
             expect(err).to.not.exist;
-            fs.readFile(path.join(__dirname, '../../../client/html/index.html'), {
+            fs.readFile(path.join(__dirname, '../../../public/index.html'), {
               encoding: 'utf-8',
             }, h.dotry(function (err, data) {
               expect(err).to.not.exist;
