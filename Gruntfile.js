@@ -216,6 +216,21 @@ module.exports = function(grunt) {
         options: {
           nodeArgs: ['--debug'],
           watch: ['server'],
+          env: {
+            PORT: '8000',
+            NODE_ENV: 'dev',
+          },
+        },
+      },
+      test: {
+        script: 'server/server.js',
+        options: {
+          nodeArgs: ['--debug'],
+          watch: ['server'],
+          env: {
+            PORT: '9000',
+            NODE_ENV: 'test',
+          },
         },
       },
     },
@@ -335,6 +350,7 @@ module.exports = function(grunt) {
         'imagemin',
       ],
       watchAndServe: ['nodemon:dev', 'watch'],
+      serveAndProtractor: ['nodemon:test', 'protractor:e2e'],
     }
   };
 
@@ -395,7 +411,7 @@ module.exports = function(grunt) {
 
     switch(name) {
     case 'e2e':
-      grunt.task.run(['build', 'connect:server', 'protractor:e2e']);
+      grunt.task.run(['build', 'concurrent:serveAndProtractor']);
       return;
     case 'midway':
       grunt.task.run('karma:midway');

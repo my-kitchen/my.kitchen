@@ -17,7 +17,7 @@ describe('MyKitchen', function() {
 
       query.clear();
       query.sendKeys('chocolat');
-      expect(recipeList.count()).to.eventually.equal(1);
+      expect(recipeList.count()).to.eventually.equal(4);
     });
 
     it('is possible to control recipe order via the drop down select box', function() {
