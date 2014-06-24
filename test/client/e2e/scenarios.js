@@ -10,14 +10,14 @@ describe('MyKitchen', function() {
       var recipeList = element.all(by.repeater('recipe in recipes'));
       var query = element(by.model('query'));
 
-      expect(recipeList.count()).to.eventually.equal(15);
+      expect(recipeList.count()).to.eventually.equal(5);
 
       query.sendKeys('Tarte');
       expect(recipeList.count()).to.eventually.equal(2);
 
       query.clear();
       query.sendKeys('chocolat');
-      expect(recipeList.count()).to.eventually.equal(4);
+      expect(recipeList.count()).to.eventually.equal(1);
     });
 
     it('is possible to control recipe order via the drop down select box', function() {
@@ -43,6 +43,16 @@ describe('MyKitchen', function() {
         'Tarte au citron meringuée',
         'Tarte aux pommes',
       ]);
+    });
+
+    it('render recipe specific links', function() {
+      var query = element(by.model('query'));
+
+      query.sendKeys('pommes');
+      element(by.css('.recipes li a')).click();
+      browser.getLocationAbsUrl().then(function(url) {
+        expect(url.split('#')[1]).to.equal('/recipe/tarte-pommes');
+      });
     });
   });
 });

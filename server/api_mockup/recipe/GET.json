@@ -1,61 +1,91 @@
 [{
   "name": "Mousse au chocolat",
   "descr": "Mousse légère au goût de chocolat noir",
-  "age": 1
+  "age": 1,
+  "id": "mousse-chocolat",
+  "imageUrl": "/0.0.0/img/recipe/mousse-chocolat.jpg"
 },{
   "name": "Tarte au citron meringuée",
   "descr": "Tarte à la crème de citron recouverte d'une meringue à l'italienne légèrement brûlée",
-  "age": 3
+  "age": 3,
+  "id": "tarte-citron",
+  "imageUrl": "/0.0.0/img/recipe/tarte-citron.jpg"
 },{
   "name": "Tarte aux pommes",
   "descr": "Tarte aux pommes normandes avec une garniture crème et amandes",
-  "age": 2
+  "age": 2,
+  "id": "tarte-pommes",
+  "imageUrl": "/0.0.0/img/recipe/tarte-pommes.jpg"
 },{
   "name": "Sorbet fraise",
   "descr": "Sorbet aux fraises fraiches avec du jus de citron et une touche de menthe rafraichissante",
-  "age": 5
+  "age": 5,
+  "id": "sorbet-fraise",
+  "imageUrl": "/0.0.0/img/recipe/sorbet-fraise.jpeg"
 },{
   "name": "Sablés à la cannelle",
   "descr": "Des petites bouchées de sablés tout rond, avec une pointe de cannelle, à croquer ou à laisser fondre",
-  "age": 6
+  "age": 6,
+  "id": "sable-cannelle",
+  "imageUrl": "/0.0.0/img/recipe/sable-cannelle.jpg"
 },{
   "name": "Millefeuille",
   "descr": "Une crème patissière cloisonnée entre des tranches croustillantes et légères de pâte feuilletée et recouvert d'un glaçage au sucre",
-  "age": 7
+  "age": 7,
+  "id": "millefeuille",
+  "imageUrl": "/0.0.0/img/recipe/millefeuille.png"
 },{
   "name": "Pâte d'amande",
   "descr": "Des amandes, du beurre et du jaune d'oeuf agrémenté de colorant pour façonner tous les décors possibles et imaginables",
-  "age": 8
+  "age": 8,
+  "id": "pate-amande",
+  "imageUrl": "/0.0.0/img/recipe/pate-amande.jpg"
 },{
   "name": "Galette des rois",
   "descr": "La célèbre galette de début d'année, pour l'épiphanie. Fourrée à la crème d'amande, cette galette à la pâte feuilletée délicatement dorée au jaune d'oeuf contient la célèbre fêve",
-  "age": 9
+  "age": 9,
+  "id": "galette-rois",
+  "imageUrl": "/0.0.0/img/recipe/galette-rois.jpg"
 },{
   "name": "Ile flottante",
   "descr": "Du blanc d'oeuf au caramel flottant sur une mer de crème anglaise à la vanille bourbon",
-  "age": 10
+  "age": 10,
+  "id": "ile-flottante",
+  "imageUrl": "/0.0.0/img/recipe/ile-flottante.jpg"
 },{
   "name": "Forêt noire",
   "descr": "Inspirée des forêts des Vosges, ce gâteau aux copeaux de chocolat et à la crème chantilly est fourré à la cerise et au kirch",
-  "age": 11
+  "age": 11,
+  "id": "foret-noire",
+  "imageUrl": "/0.0.0/img/recipe/foret-noire.jpg"
 },{
   "name": "Moelleux au chocolat",
   "descr": "Tendre et mousseux, ce gâteau révèle la force du chocolat noir",
-  "age": 12
+  "age": 12,
+  "id": "moelleux-chocolat",
+  "imageUrl": "/0.0.0/img/recipe/moelleux-chocolat.jpg"
 },{
-  "name": "Gâteau arbré",
+  "name": "Gâteau marbré",
   "descr": "Ce marbré vanille chocolat à la texture aérée et légère est un classique",
-  "age": 13
+  "age": 13,
+  "id": "gateau-marbre",
+  "imageUrl": "/0.0.0/img/recipe/gateau-marbre.jpeg"
 },{
   "name": "Crêpe",
   "descr": "Reines à la chandeleur, les crèpes sont légères et fines, contrairement aux pancakes",
-  "age": 14
+  "age": 14,
+  "id": "crepe",
+  "imageUrl": "/0.0.0/img/recipe/crepe.jpg"
 },{
   "name": "Gaufre",
   "descr": "Liégeoises, elles sont tendres et caramélisées avec un peu de cassonade",
-  "age": 15
+  "age": 15,
+  "id": "gaufre",
+  "imageUrl": "/0.0.0/img/recipe/gaufre.jpg"
 },{
   "name": "Madeleine",
   "descr": "A l'eau de fleur d'oranger ou à la vanille, la madeleine doit son moelleux à sa forme unique",
-  "age": 4
+  "age": 4,
+  "id": "madeleine",
+  "imageUrl": "/0.0.0/img/recipe/madeleine.jpg"
 }]

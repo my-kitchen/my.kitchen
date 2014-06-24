@@ -98,7 +98,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'client/img/',
-          src: '**/*.jpg',
+          src: '**/*.jp*g',
           dest: 'public/<%= pkg.version %>/img/',
         }],
       },
@@ -417,7 +417,7 @@ module.exports = function(grunt) {
       grunt.task.run(tasks);
       return;
     case 'kunit':
-      tasks.push('karma:unit');
+      tasks.push('karma:kunit');
       grunt.task.run(tasks);
       return;
     case 'client':

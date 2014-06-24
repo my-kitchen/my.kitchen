@@ -16,6 +16,8 @@ append content
 
       .col-md-10
         ul.recipes
-          li(ng-repeat="recipe in recipes | filter:query | orderBy:orderProp")
-            span {{recipe.name}}
+          li(ng-repeat="recipe in recipes | filter:query | orderBy:orderProp",  class="thumbnail")
+            a(href="#/recipe/{{recipe.id}}", class="thumb")
+              img(ng-src="{{recipe.imageUrl}}")
+            a(href="#/recipe/{{recipe.id}}"){{recipe.name}}
             p {{recipe.descr}}
