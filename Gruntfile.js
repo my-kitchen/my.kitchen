@@ -130,7 +130,7 @@ module.exports = function(grunt) {
     protractor: {
       options: {
         configFile: './node_modules/protractor/referenceConf.js',
-        keepAlive: true,
+        keepAlive: false,
         noColor: false,
       },
       e2e: {
@@ -217,7 +217,7 @@ module.exports = function(grunt) {
           nodeArgs: ['--debug'],
           watch: ['server'],
         },
-      },  
+      },
     },
 
     // check js code style
@@ -349,15 +349,15 @@ module.exports = function(grunt) {
       grunt.config('jshint.jsserver.src', filepath);
       return;
     }
-    
+
     if (filepath.match('^client/')) {
       grunt.config('jshint.jsclient.src', filepath);
       return;
     }
-    
+
     if (filepath.match('^test/')) {
       grunt.config('jshint.test.src', filepath);
-      
+
       var tasks = grunt.config('watch.test.tasks');
       if (filepath.match('^test/server')) {
         if (filepath.match('^test/server/func')) {
@@ -367,9 +367,17 @@ module.exports = function(grunt) {
           grunt.config('mochaTest.unit.src', filepath);
           tasks[1] = 'test:unit';
         }
-        
+
       } else {
-        tasks[1] = 'test:client';
+        if (filepath.match('^test/client/e2e')) {
+          tasks[1] = 'test:e2e';
+        }
+        else if (filepath.match('^test/client/midway')) {
+          tasks[1] = 'test:midway';
+        }
+        else {
+          tasks[1] = 'test:kunit';
+        }
       }
       grunt.config('watch.test.tasks', tasks);
     }

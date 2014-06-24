@@ -7,6 +7,8 @@
   "trailing": true,
   "undef":    true,
 
+  "globalstrict": true,
+
   "asi":          false,
   "boss":         false,
   "debug":        false,
@@ -17,7 +19,6 @@
   "expr":         false,
   "forin":        false,
   "funcscope":    false,
-  "globalstrict": false,
   "iterator":     false,
   "lastsemic":    false,
   "laxbreak":     false,

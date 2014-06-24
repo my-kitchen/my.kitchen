@@ -10,4 +10,6 @@ exports.config = {
   specs: ['./e2e/**/*.js'],
 
   framework: 'mocha',
+
+  baseUrl: 'http://127.0.0.1:9000/',
 };

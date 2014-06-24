@@ -59,6 +59,7 @@
     "protractor" : true,
     "by"         : true,
     "element"    : true,
-    "$"          : true
+    "$"          : true,
+    "inject"     : true
   }
 }

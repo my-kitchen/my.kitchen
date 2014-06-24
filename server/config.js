@@ -3,7 +3,7 @@
 var baseDir = __dirname;
 module.exports = {
   app: {
-    fakeApi: false,
+    fakeApi: true,
     baseDir: baseDir,
   },
 
