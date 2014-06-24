@@ -6,7 +6,7 @@ describe('A test suite for midway', function() {
   afterEach(function() {
   });
  
-  it('should fail', function() {
-    expect(true).to.be.false;
+  it('should succeed', function() {
+    expect(true).to.be.true;
   });
 });

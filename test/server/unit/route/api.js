@@ -9,6 +9,7 @@ var unit = h.r42.createSub({
   }
 });
 unit.inject(function (/*!lib/route/api*/ apiFn, express, fs, path) {
+  var Express = express;
 
   describe('API routes', function() {
     it('exist', function() {
@@ -21,7 +22,7 @@ unit.inject(function (/*!lib/route/api*/ apiFn, express, fs, path) {
 
     describe('not in fakeApi conf', function() {
       before(function() {
-        apiFn(new express(), { fakeApi: false });
+        apiFn(new Express(), { fakeApi: false });
       });
 
       it('register an ALL /api/ route', function() {
@@ -44,7 +45,7 @@ unit.inject(function (/*!lib/route/api*/ apiFn, express, fs, path) {
       };
 
       before(function() {
-        apiFn(new express(), config);
+        apiFn(new Express(), config);
       });
 
       it('register an ALL /api/ route', function() {
@@ -71,7 +72,7 @@ unit.inject(function (/*!lib/route/api*/ apiFn, express, fs, path) {
         describe('if reading file fails by throwing an error', function() {
           before(function() {
             fs.$c.readFile.throw(fs);
-            apiFn(new express(), config);
+            apiFn(new Express(), config);
           });
 
           it('return the error', function() {
@@ -83,7 +84,7 @@ unit.inject(function (/*!lib/route/api*/ apiFn, express, fs, path) {
         describe('if reading file fails by returning an error', function() {
           before(function() {
             fs.$c.readFile.fail(fs);
-            apiFn(new express(), config);
+            apiFn(new Express(), config);
           });
 
           it('return the error', function() {
@@ -95,7 +96,7 @@ unit.inject(function (/*!lib/route/api*/ apiFn, express, fs, path) {
         describe('if reading file succeeds', function() {
           before(function() {
             fs.$c.readFile.success(fs);
-            apiFn(new express(), config);
+            apiFn(new Express(), config);
           });
 
           it('set a content-type specific header', function() {

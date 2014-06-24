@@ -9,12 +9,13 @@ var unit = h.r42.createSub({
   }
 });
 unit.inject(function (/*!lib/route/clientHtml*/ clientHtmlFn, express, fs, path) {
+  var Express = express;
 
   describe('HTML route', function() {
     beforeEach(function() {
       h.reset(fs);
       h.reset(path);
-      clientHtmlFn(new express(), { baseDir: h.config.r42.baseDir });
+      clientHtmlFn(new Express(), { baseDir: h.config.r42.baseDir });
     });
 
     it('exist', function() {
@@ -54,7 +55,7 @@ unit.inject(function (/*!lib/route/clientHtml*/ clientHtmlFn, express, fs, path)
       describe('if reading file fails by throwing an error', function() {
         before(function() {
           fs.$c.readFile.throw(fs);
-          clientHtmlFn(new express(), { baseDir: h.config.r42.baseDir });
+          clientHtmlFn(new Express(), { baseDir: h.config.r42.baseDir });
         });
 
         it('return the error', function() {
@@ -66,7 +67,7 @@ unit.inject(function (/*!lib/route/clientHtml*/ clientHtmlFn, express, fs, path)
       describe('if reading file fails by returning an error', function() {
         before(function() {
           fs.$c.readFile.fail(fs);
-          clientHtmlFn(new express(), { baseDir: h.config.r42.baseDir });
+          clientHtmlFn(new Express(), { baseDir: h.config.r42.baseDir });
         });
 
         it('return the error', function() {
@@ -78,7 +79,7 @@ unit.inject(function (/*!lib/route/clientHtml*/ clientHtmlFn, express, fs, path)
       describe('if reading file succeeds', function() {
         before(function() {
           fs.$c.readFile.success(fs);
-          clientHtmlFn(new express(), { baseDir: h.config.r42.baseDir });
+          clientHtmlFn(new Express(), { baseDir: h.config.r42.baseDir });
         });
 
         it('set a content-type specific header', function() {

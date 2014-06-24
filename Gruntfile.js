@@ -152,6 +152,9 @@ module.exports = function(grunt) {
 
     // for server tests
     mochaTest: {
+      options: {
+        clearRequireCache: true,
+      },
       func: {
         src: 'test/server/func/**/*.js',
       },
@@ -167,10 +170,16 @@ module.exports = function(grunt) {
         tasks: ['jade', 'ngtemplates', 'usemin2'],
       },
       jsclient: {
+        options: {
+          spawn: false,
+        },
         files: 'client/js/**/*.js',
         tasks: ['jshint:jsclient', 'test:client'],
       },
       jsserver: {
+        options: {
+          spawn: false,
+        },
         files: 'server/**/*.js',
         tasks: ['jshint:jsserver', 'test:server'],
       },
@@ -187,8 +196,14 @@ module.exports = function(grunt) {
       grunt: {
         files: ['Gruntfile.js', 'package.json'],
         tasks: ['jshint:grunt'],
+        options: {
+          reload: true,
+        },
       },
       test: {
+        options: {
+          spawn: false,
+        },
         files: 'test/**/*.js',
         tasks: ['jshint:test', 'test'],
       },
@@ -332,17 +347,27 @@ module.exports = function(grunt) {
   grunt.event.on('watch', function(action, filepath) {
     if (filepath.match('^server/')) {
       grunt.config('jshint.jsserver.src', filepath);
+      return;
     }
-    else if (filepath.match('^client/')) {
+    
+    if (filepath.match('^client/')) {
       grunt.config('jshint.jsclient.src', filepath);
+      return;
     }
-    else if (filepath.match('^test/server')) {
+    
+    if (filepath.match('^test/')) {
       grunt.config('jshint.test.src', filepath);
+      
       var tasks = grunt.config('watch.test.tasks');
       if (filepath.match('^test/server')) {
-        grunt.config('mochaTest.func.src', filepath);
-        grunt.config('mochaTest.unit.src', filepath);
-        tasks[1] = 'test:server';
+        if (filepath.match('^test/server/func')) {
+          grunt.config('mochaTest.func.src', filepath);
+          tasks[1] = 'test:func';
+        } else {
+          grunt.config('mochaTest.unit.src', filepath);
+          tasks[1] = 'test:unit';
+        }
+        
       } else {
         tasks[1] = 'test:client';
       }
@@ -370,7 +395,6 @@ module.exports = function(grunt) {
     case 'kunit':
       grunt.task.run('karma:kunit');
       return;
-    break;
     case 'client':
       grunt.task.run(['test:e2e', 'test:midway', 'test:kunit']);
       return;

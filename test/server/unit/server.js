@@ -5,14 +5,20 @@ var unit = h.r42.createSub({
   paths: {
     express: 'mock/express',
     'lib/route': 'spy!route',
+    path: 'mock/path',
   },
 });
-unit.inject(function (_, /*!lib*/ appFn, express, /*!lib/route*/ routes) {
+unit.inject(function (_, /*!lib*/ appFn, express, /*!lib/route*/ routes, path) {
 
   describe('Server', function() {
+    var config = { baseDir: 'baseDir' };
+
     beforeEach(function() {
       express.reset();
+      express.static.reset();
+      h.reset(express.static.mime);
       routes.reset();
+      h.reset(path);
     });
 
     it('exist', function() {
@@ -24,18 +30,43 @@ unit.inject(function (_, /*!lib*/ appFn, express, /*!lib/route*/ routes) {
     });
 
     it('instanciate an express app', function() {
-      appFn(h.config.app);
-      expect(express).to.have.been.calledWithNew; 
+      appFn(config);
+      expect(express).to.have.been.calledWithNew;
+    });
+
+    it('configure a static server for static files', function() {
+      appFn(config);
+      expect(express.static.mime.define).to.have.been.calledOnce
+        .and.calledWith({
+          'application/x-font-woff': ['woff'],
+          'application/x-font-ttf': ['ttf'],
+          'application/vnd.ms-fontobject': ['eot'],
+          'font/opentype': ['otf'],
+          'text/css': ['css'],
+        });
+      expect(path.join).to.have.been.calledOnce
+        .and.calledWith();
+      expect(express.static).to.have.been.calledOnce
+        .and.calledWith('right/path', {
+          maxAge: 0,
+          index: '<noindex>',
+        });
+    });
+
+    it('create a static server for static files', function() {
+      var appIns = appFn(config);
+      expect(appIns.use).to.have.been.calledOnce
+        .and.calledWith(express.static());
     });
 
     it('call the routes, with the app and the config', function() {
-      appFn(h.config.app);
+      appFn(config);
       expect(routes).to.have.been.calledOnce
-        .and.calledWith(express.$i, h.config.app);
+        .and.calledWith(express.$i, config);
     });
 
     it('return the express app', function() {
-      expect(appFn(h.config.app)).to.be.an.instanceof(express);
+      expect(appFn(config)).to.be.an.instanceof(express);
     });
   });
 });

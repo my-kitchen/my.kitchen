@@ -55,6 +55,10 @@
     "afterEach"  : true,
     "expect"     : true,
     "window"     : true,
-    "browser"    : true
+    "browser"    : true,
+    "protractor" : true,
+    "by"         : true,
+    "element"    : true,
+    "$"          : true
   }
 }

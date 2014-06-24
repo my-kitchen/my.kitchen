@@ -16,19 +16,24 @@ var Express = function() {
   Express.called = true;
   Express.$i = this;
 
+  var req, res, next;
+
+  // use
+  this.use = sinon.spy();
+
   // all
-  var req = new Request();
-  var res = new Response();
-  var next = new Middleware();
+  req = new Request();
+  res = new Response();
+  next = new Middleware();
   this.all = sinon.stub().callsArgWith(1, req, res, next);
   this.all.req = req;
   this.all.res = res;
   this.all.next = next;
 
   // get
-  var req = new Request();
-  var res = new Response();
-  var next = new Middleware();
+  req = new Request();
+  res = new Response();
+  next = new Middleware();
   this.get = sinon.stub().callsArgWith(1, req, res, next);
   this.get.req = req;
   this.get.res = res;
@@ -36,5 +41,11 @@ var Express = function() {
 };
 _.extend(Express, sinon.spy());
 Express.$i = null;
+
+// static
+Express.static = sinon.spy();
+Express.static.mime = {
+  define: sinon.spy(),
+};
 
 module.exports = Express;
