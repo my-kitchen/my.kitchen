@@ -7,7 +7,9 @@ h.r42.inject(function (_, /*!lib*/ app, requestFn, fs, path) {
     var request;
 
     before(function() {
-      request = requestFn(app(h.config.app));
+      request = requestFn(app(_.merge({}, h.config.app, {
+        fakeApi: false,
+      })));
     });
 
     it('has a GET / route', function(done) {
@@ -39,7 +41,7 @@ h.r42.inject(function (_, /*!lib*/ app, requestFn, fs, path) {
           }, done, false));
       });
     });
-    
+
     it('has no GET /api/ route', function(done) {
       request
         .get('/api/')

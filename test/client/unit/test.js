@@ -6,7 +6,7 @@ describe('A test suite for unit', function() {
   afterEach(function() {
   });
  
-  it('should fail', function() {
-    expect(true).to.be.false;
+  it('should succeed', function() {
+    expect(true).to.be.true;
   });
 });

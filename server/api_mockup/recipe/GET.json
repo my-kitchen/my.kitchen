@@ -1,0 +1,61 @@
+[{
+  "name": "Mousse au chocolat",
+  "descr": "Mousse légère au goût de chocolat noir",
+  "age": 1
+},{
+  "name": "Tarte au citron meringuée",
+  "descr": "Tarte à la crème de citron recouverte d'une meringue à l'italienne légèrement brûlée",
+  "age": 3
+},{
+  "name": "Tarte aux pommes",
+  "descr": "Tarte aux pommes normandes avec une garniture crème et amandes",
+  "age": 2
+},{
+  "name": "Sorbet fraise",
+  "descr": "Sorbet aux fraises fraiches avec du jus de citron et une touche de menthe rafraichissante",
+  "age": 5
+},{
+  "name": "Sablés à la cannelle",
+  "descr": "Des petites bouchées de sablés tout rond, avec une pointe de cannelle, à croquer ou à laisser fondre",
+  "age": 6
+},{
+  "name": "Millefeuille",
+  "descr": "Une crème patissière cloisonnée entre des tranches croustillantes et légères de pâte feuilletée et recouvert d'un glaçage au sucre",
+  "age": 7
+},{
+  "name": "Pâte d'amande",
+  "descr": "Des amandes, du beurre et du jaune d'oeuf agrémenté de colorant pour façonner tous les décors possibles et imaginables",
+  "age": 8
+},{
+  "name": "Galette des rois",
+  "descr": "La célèbre galette de début d'année, pour l'épiphanie. Fourrée à la crème d'amande, cette galette à la pâte feuilletée délicatement dorée au jaune d'oeuf contient la célèbre fêve",
+  "age": 9
+},{
+  "name": "Ile flottante",
+  "descr": "Du blanc d'oeuf au caramel flottant sur une mer de crème anglaise à la vanille bourbon",
+  "age": 10
+},{
+  "name": "Forêt noire",
+  "descr": "Inspirée des forêts des Vosges, ce gâteau aux copeaux de chocolat et à la crème chantilly est fourré à la cerise et au kirch",
+  "age": 11
+},{
+  "name": "Moelleux au chocolat",
+  "descr": "Tendre et mousseux, ce gâteau révèle la force du chocolat noir",
+  "age": 12
+},{
+  "name": "Gâteau arbré",
+  "descr": "Ce marbré vanille chocolat à la texture aérée et légère est un classique",
+  "age": 13
+},{
+  "name": "Crêpe",
+  "descr": "Reines à la chandeleur, les crèpes sont légères et fines, contrairement aux pancakes",
+  "age": 14
+},{
+  "name": "Gaufre",
+  "descr": "Liégeoises, elles sont tendres et caramélisées avec un peu de cassonade",
+  "age": 15
+},{
+  "name": "Madeleine",
+  "descr": "A l'eau de fleur d'oranger ou à la vanille, la madeleine doit son moelleux à sa forme unique",
+  "age": 4
+}]

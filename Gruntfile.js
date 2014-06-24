@@ -2,6 +2,7 @@
 
 module.exports = function(grunt) {
 
+  var _ = require('lodash');
   var pkg = grunt.file.readJSON('package.json');
 
   // Project configuration
@@ -54,12 +55,12 @@ module.exports = function(grunt) {
     },
 
     // for e2e tests: open a front server
-    connect: {
-      server: {
+    express: {
+      test: {
         options: {
+          script: 'server/server.js',
           port: 9000,
-          hostname: 'localhost',
-          base: 'public',
+          node_env: 'test',
         },
       },
     },
@@ -68,9 +69,11 @@ module.exports = function(grunt) {
     env : {
       dev : {
         NODE_ENV: 'development',
+        NODE_PORT: 8000,
       },
       test : {
         NODE_ENV: 'test',
+        NODE_PORT: 9000,
       },
     },
 
@@ -130,7 +133,7 @@ module.exports = function(grunt) {
     protractor: {
       options: {
         configFile: './node_modules/protractor/referenceConf.js',
-        keepAlive: true,
+        keepAlive: false,
         noColor: false,
       },
       e2e: {
@@ -152,6 +155,9 @@ module.exports = function(grunt) {
 
     // for server tests
     mochaTest: {
+      options: {
+        clearRequireCache: true,
+      },
       func: {
         src: 'test/server/func/**/*.js',
       },
@@ -167,10 +173,16 @@ module.exports = function(grunt) {
         tasks: ['jade', 'ngtemplates', 'usemin2'],
       },
       jsclient: {
+        options: {
+          spawn: false,
+        },
         files: 'client/js/**/*.js',
         tasks: ['jshint:jsclient', 'test:client'],
       },
       jsserver: {
+        options: {
+          spawn: false,
+        },
         files: 'server/**/*.js',
         tasks: ['jshint:jsserver', 'test:server'],
       },
@@ -187,8 +199,14 @@ module.exports = function(grunt) {
       grunt: {
         files: ['Gruntfile.js', 'package.json'],
         tasks: ['jshint:grunt'],
+        options: {
+          reload: true,
+        },
       },
       test: {
+        options: {
+          spawn: false,
+        },
         files: 'test/**/*.js',
         tasks: ['jshint:test', 'test'],
       },
@@ -202,7 +220,7 @@ module.exports = function(grunt) {
           nodeArgs: ['--debug'],
           watch: ['server'],
         },
-      },  
+      },
     },
 
     // check js code style
@@ -320,7 +338,7 @@ module.exports = function(grunt) {
         'imagemin',
       ],
       watchAndServe: ['nodemon:dev', 'watch'],
-    }
+    },
   };
 
   // Load modules
@@ -332,19 +350,39 @@ module.exports = function(grunt) {
   grunt.event.on('watch', function(action, filepath) {
     if (filepath.match('^server/')) {
       grunt.config('jshint.jsserver.src', filepath);
+      return;
     }
-    else if (filepath.match('^client/')) {
+
+    if (filepath.match('^client/')) {
       grunt.config('jshint.jsclient.src', filepath);
+      return;
     }
-    else if (filepath.match('^test/server')) {
+
+    if (filepath.match('^test/')) {
       grunt.config('jshint.test.src', filepath);
+
       var tasks = grunt.config('watch.test.tasks');
       if (filepath.match('^test/server')) {
-        grunt.config('mochaTest.func.src', filepath);
-        grunt.config('mochaTest.unit.src', filepath);
-        tasks[1] = 'test:server';
-      } else {
-        tasks[1] = 'test:client';
+        if (filepath.match('^test/server/func')) {
+          grunt.config('mochaTest.func.src', filepath);
+          tasks[1] = 'test:func';
+        }
+        else {
+          grunt.config('mochaTest.unit.src', filepath);
+          tasks[1] = 'test:unit';
+        }
+      }
+      else {
+        if (filepath.match('^test/client/e2e')) {
+          tasks[1] = 'test:e2e';
+          grunt.config('test.watchedE2E', true);
+        }
+        else if (filepath.match('^test/client/midway')) {
+          tasks[1] = 'test:midway';
+        }
+        else {
+          tasks[1] = 'test:kunit';
+        }
       }
       grunt.config('watch.test.tasks', tasks);
     }
@@ -353,7 +391,7 @@ module.exports = function(grunt) {
   grunt.registerTask('build', ['clean:all', 'concurrent:build', 'ngtemplates', 'usemin2']);
   grunt.registerTask('start', ['build', 'env:dev', 'concurrent:watchAndServe']);
   grunt.registerTask('test', function(name, reporter) {
-    var mochaTasks = ['env:test'];
+    var tasks = ['env:test'];
 
     if (!name) {
       grunt.task.run(['test:client', 'test:server']);
@@ -362,23 +400,34 @@ module.exports = function(grunt) {
 
     switch(name) {
     case 'e2e':
-      grunt.task.run(['build', 'connect:server', 'protractor:e2e']);
+      if (!grunt.config('test.watchedE2E')) {
+        tasks.push('build');
+      }
+      else {
+        grunt.config('test.watchedE2E', false);
+      }
+
+      tasks.push('express:test');
+      tasks.push('protractor:e2e');
+      tasks.push('express:test:stop');
+      grunt.task.run(tasks);
       return;
     case 'midway':
-      grunt.task.run('karma:midway');
+      tasks.push('karma:midway');
+      grunt.task.run(tasks);
       return;
     case 'kunit':
-      grunt.task.run('karma:kunit');
+      tasks.push('karma:unit');
+      grunt.task.run(tasks);
       return;
-    break;
     case 'client':
       grunt.task.run(['test:e2e', 'test:midway', 'test:kunit']);
       return;
     case 'unit':
-      mochaTasks.push('mochaTest:unit');
+      tasks.push('mochaTest:unit');
       break;
     case 'func':
-      mochaTasks.push('mochaTest:func');
+      tasks.push('mochaTest:func');
       break;
     case 'server':
       grunt.task.run(['test:unit', 'test:func']);
@@ -392,7 +441,7 @@ module.exports = function(grunt) {
       });
     }
 
-    grunt.task.run(mochaTasks);
+    grunt.task.run(tasks);
   });
 
   grunt.registerTask('default', 'start');

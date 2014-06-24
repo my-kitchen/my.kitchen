@@ -42,7 +42,9 @@ var dotry = function(fn, done, last) {
 
 var newApply = function(Ctor, args) {
   Array.prototype.unshift.call(args, Ctor);
+  // jshint ignore:start
   return new (Function.prototype.bind.apply(Ctor, arguments));
+  // jshint ignore:end
 };
 
 var reset = function(obj) {
