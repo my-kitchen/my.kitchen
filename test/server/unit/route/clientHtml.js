@@ -12,10 +12,12 @@ unit.inject(function (/*!lib/route/clientHtml*/ clientHtmlFn, express, fs, path)
   var Express = express;
 
   describe('HTML route', function() {
+    var config = { publicDir: 'publicDir' };
+
     beforeEach(function() {
       h.reset(fs);
       h.reset(path);
-      clientHtmlFn(new Express(), { baseDir: h.config.r42.baseDir });
+      clientHtmlFn(new Express(), config);
     });
 
     it('exist', function() {
@@ -42,8 +44,8 @@ unit.inject(function (/*!lib/route/clientHtml*/ clientHtmlFn, express, fs, path)
       it('create a static path', function() {
         expect(path.join).to.have.been.calledOnce
           .and.calledWith(
-            h.config.r42.baseDir,
-            '../public/index.html'
+            config.publicDir,
+            '/index.html'
           );
       });
 
@@ -55,7 +57,7 @@ unit.inject(function (/*!lib/route/clientHtml*/ clientHtmlFn, express, fs, path)
       describe('if reading file fails by throwing an error', function() {
         before(function() {
           fs.$c.readFile.throw(fs);
-          clientHtmlFn(new Express(), { baseDir: h.config.r42.baseDir });
+          clientHtmlFn(new Express(), config);
         });
 
         it('return the error', function() {
@@ -67,7 +69,7 @@ unit.inject(function (/*!lib/route/clientHtml*/ clientHtmlFn, express, fs, path)
       describe('if reading file fails by returning an error', function() {
         before(function() {
           fs.$c.readFile.fail(fs);
-          clientHtmlFn(new Express(), { baseDir: h.config.r42.baseDir });
+          clientHtmlFn(new Express(), config);
         });
 
         it('return the error', function() {
@@ -79,7 +81,7 @@ unit.inject(function (/*!lib/route/clientHtml*/ clientHtmlFn, express, fs, path)
       describe('if reading file succeeds', function() {
         before(function() {
           fs.$c.readFile.success(fs);
-          clientHtmlFn(new Express(), { baseDir: h.config.r42.baseDir });
+          clientHtmlFn(new Express(), config);
         });
 
         it('set a content-type specific header', function() {

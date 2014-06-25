@@ -9,9 +9,12 @@ module.exports = function(grunt) {
   var config = {
     pkg: pkg,
 
+    /*
+     * Build tools
+     */
     // clean all files in public
     clean: {
-      all: ['public/<%= pkg.version %>/'],
+      all: ['public/'],
     },
 
     // jade compilation
@@ -34,9 +37,9 @@ module.exports = function(grunt) {
           ext: '.html',
         }, {
           expand: true,
-          cwd: 'client/html/template',
+          cwd: 'client/html/templates',
           src: '**/*.jade',
-          dest: 'public/<%= pkg.version %>/templates',
+          dest: 'public/templates',
           ext: '.html',
         }],
       },
@@ -49,58 +52,8 @@ module.exports = function(grunt) {
           compress: false,
         },
         files: {
-          'public/<%= pkg.version %>/css/app.css': ['client/css/*.css'],
+          'public/css/app.css': ['client/css/*.css'],
         },
-      },
-    },
-
-    // for e2e tests: open a front server
-    express: {
-      test: {
-        options: {
-          script: 'server/server.js',
-          port: 9000,
-          node_env: 'test',
-        },
-      },
-    },
-
-    // declare environments
-    env : {
-      dev : {
-        NODE_ENV: 'development',
-        NODE_PORT: 8000,
-      },
-      test : {
-        NODE_ENV: 'test',
-        NODE_PORT: 9000,
-      },
-    },
-
-    // image minification
-    imagemin: {
-      png: {
-        options: {
-          pngquant: true,
-          optimizationLevel: 7,
-        },
-        files: [{
-          expand: true,
-          cwd: 'client/img/',
-          src: '**/*.png',
-          dest: 'public/<%= pkg.version %>/img/',
-        }],
-      },
-      jpg: {
-        options: {
-          progressive: true,
-        },
-        files: [{
-          expand: true,
-          cwd: 'client/img/',
-          src: '**/*.jpg',
-          dest: 'public/<%= pkg.version %>/img/',
-        }],
       },
     },
 
@@ -119,13 +72,149 @@ module.exports = function(grunt) {
           expand: true,
           cwd: 'bower_components/font-awesome/fonts/',
           src: '**/*',
-          dest: 'public/<%= pkg.version %>/fonts/',
+          dest: 'public/fonts/',
         }, {
           expand: true,
           cwd: 'bower_components/bootstrap/fonts/',
           src: '**/*',
-          dest: 'public/<%= pkg.version %>/fonts/',
+          dest: 'public/fonts/',
         }],
+      },
+    },
+
+    // image minification
+    imagemin: {
+      png: {
+        options: {
+          pngquant: true,
+          optimizationLevel: 7,
+        },
+        files: [{
+          expand: true,
+          cwd: 'client/img/',
+          src: '**/*.png',
+          dest: 'public/img/',
+        }],
+      },
+      jpg: {
+        options: {
+          progressive: true,
+        },
+        files: [{
+          expand: true,
+          cwd: 'client/img/',
+          src: '**/*.jp*g',
+          dest: 'public/img/',
+        }],
+      },
+    },
+
+    // register angular templates
+    ngtemplates: {
+      app: {
+        cwd: 'public/',
+        src: ['templates/**/*.html'],
+        dest: 'public/templates.js',
+        options: {
+          module: 'myKitchen',
+          htmlmin: {
+            collapseBooleanAttributes: true,
+            collapseWhitespace: true,
+            removeAttributeQuotes: true,
+            removeComments: true,
+            removeEmptyAttributes: true,
+            removeRedundantAttributes: true,
+            removeScriptTypeAttributes: true,
+            removeStyleLinkTypeAttributes: true,
+          },
+        },
+      },
+    },
+
+    // minify css and js
+    usemin2: {
+      html: 'public/*.html',
+      options: {
+        baseDir: 'public',
+        jsmin: ['ngmin', 'uglify'],
+      },
+      css: {
+        dep: {
+          dest: 'public/css/dep.min.css',
+          files: [{
+            cwd: 'bower_components/bootstrap/dist/css/',
+            src: 'bootstrap__min__.css',
+            dest: 'public/css/',
+          }, {
+            cwd: 'bower_components/font-awesome/css/',
+            src: 'font-awesome__min__.css',
+            dest: 'public/css/',
+          }],
+        },
+        app: {
+          dest: 'public/css/app.min.css',
+          files: [{
+            cwd: 'public/css/',
+            src: 'app.css',
+          }],
+        },
+      },
+      js: {
+        head: {
+          dest: 'public/js/libs.min.js',
+          files: [{
+            cwd: 'bower_components/angular/',
+            src: 'angular__min__.js',
+            dest: 'public/js/libs/',
+          }, {
+            cwd: 'bower_components/angular-bootstrap/',
+            src: 'ui-bootstrap-tpls__min__.js',
+            dest: 'public/js/libs/',
+          }, {
+            cwd: 'bower_components/angular-route/',
+            src: 'angular-route__min__.js',
+            dest: 'public/js/libs/',
+          }],
+        },
+        body: {
+          dest: 'public/js/body.min.js',
+          files: [{
+            cwd: 'client/js',
+            src: ['*.js', '*/*.js', '*/*/**/*.js'],
+            dest: 'public/js/',
+          }, {
+            cwd: 'public/',
+            src: ['templates.js'],
+            dest: 'public/',
+          }],
+        },
+      },
+    },
+
+    /*
+     * Test tools
+     */
+    // for server tests
+    mochaTest: {
+      options: {
+        clearRequireCache: true,
+      },
+      func: {
+        src: 'test/server/func/**/*.js',
+      },
+      unit: {
+        src: 'test/server/unit/**/*.js',
+      },
+    },
+
+    // for e2e tests: open a front server
+    express: {
+      test: {
+        options: {
+          script: 'server/server.js',
+          port: 9000,
+          node_env: 'test',
+        },
       },
     },
 
@@ -153,17 +242,33 @@ module.exports = function(grunt) {
       },
     },
 
-    // for server tests
-    mochaTest: {
+    /*
+     * Launching tools
+     */
+    // declare environments
+    env : {
+      dev : {
+        NODE_ENV: 'development',
+        NODE_PORT: 8000,
+      },
+      test : {
+        NODE_ENV: 'test',
+        NODE_PORT: 9000,
+      },
+    },
+
+    // async launch grunt tasks
+    concurrent: {
       options: {
-        clearRequireCache: true,
+        logConcurrentOutput: true,
       },
-      func: {
-        src: 'test/server/func/**/*.js',
-      },
-      unit: {
-        src: 'test/server/unit/**/*.js',
-      },
+      build: [
+        'jade',
+        'stylus',
+        'copy',
+        'imagemin',
+      ],
+      watchAndServe: ['nodemon:dev', 'watch'],
     },
 
     // for dev: watch changing files
@@ -212,17 +317,6 @@ module.exports = function(grunt) {
       },
     },
 
-    // start a nodejs server
-    nodemon: {
-      dev: {
-        script: 'server/server.js',
-        options: {
-          nodeArgs: ['--debug'],
-          watch: ['server'],
-        },
-      },
-    },
-
     // check js code style
     jshint: {
       options: {
@@ -248,96 +342,15 @@ module.exports = function(grunt) {
       },
     },
 
-    // register angular templates
-    ngtemplates: {
-      app: {
-        cwd: 'public/',
-        src: ['<%= pkg.version %>/templates/**/*.html'],
-        dest: 'public/<%= pkg.version %>/templates.js',
+    // start a nodejs server
+    nodemon: {
+      dev: {
+        script: 'server/server.js',
         options: {
-          //module: 'my.kitchen',
-          htmlmin: {
-            collapseBooleanAttributes: true,
-            collapseWhitespace: true,
-            removeAttributeQuotes: true,
-            removeComments: true,
-            removeEmptyAttributes: true,
-            removeRedundantAttributes: true,
-            removeScriptTypeAttributes: true,
-            removeStyleLinkTypeAttributes: true,
-          },
+          nodeArgs: ['--debug'],
+          watch: ['server'],
         },
       },
-    },
-
-    // minify css and js
-    usemin2: {
-      html: 'public/*.html',
-      options: {
-        baseDir: 'public',
-        jsmin: ['ngmin', 'uglify'],
-      },
-      css: {
-        dep: {
-          dest: 'public/<%= pkg.version %>/css/dep.min.css',
-          files: [{
-            cwd: 'bower_components/bootstrap/dist/css/',
-            src: 'bootstrap__min__.css',
-            dest: 'public/<%= pkg.version %>/css/',
-          }, {
-            cwd: 'bower_components/font-awesome/css/',
-            src: 'font-awesome__min__.css',
-            dest: 'public/<%= pkg.version %>/css/',
-          }],
-        },
-        app: {
-          dest: 'public/<%= pkg.version %>/css/app.min.css',
-          files: [{
-            cwd: 'public/<%= pkg.version %>/css/',
-            src: 'app.css',
-          }],
-        },
-      },
-      js: {
-        head: {
-          dest: 'public/<%= pkg.version %>/js/libs.min.js',
-          files: [{
-            cwd: 'bower_components/angular/',
-            src: 'angular__min__.js',
-            dest: 'public/<%= pkg.version %>/js/libs/',
-          }, {
-            cwd: 'bower_components/angular-bootstrap/',
-            src: 'ui-bootstrap-tpls__min__.js',
-            dest: 'public/<%= pkg.version %>/js/libs/',
-          }],
-        },
-        body: {
-          dest: 'public/<%= pkg.version %>/js/body.min.js',
-          files: [{
-            cwd: 'client/js',
-            src: ['*.js', '*/*.js', '*/*/**/*.js'],
-            dest: 'public/<%= pkg.version %>/js/',
-          }, {
-            cwd: 'public/<%= pkg.version %>/',
-            src: ['templates.js'],
-            dest: 'public/<%= pkg.version %>/',
-          }],
-        },
-      },
-    },
-
-    // async launch grunt tasks
-    concurrent: {
-      options: {
-        logConcurrentOutput: true,
-      },
-      build: [
-        'jade',
-        'stylus',
-        'copy',
-        'imagemin',
-      ],
-      watchAndServe: ['nodemon:dev', 'watch'],
     },
   };
 
@@ -345,6 +358,67 @@ module.exports = function(grunt) {
   grunt.file.expand('node_modules/grunt-*/tasks').forEach(grunt.loadTasks);
 
   grunt.initConfig(config);
+
+  grunt.registerTask('build', ['clean:all', 'concurrent:build', 'ngtemplates', 'usemin2']);
+  grunt.registerTask('serve', ['env:dev', 'nodemon:dev']);
+  grunt.registerTask('start', ['build', 'env:dev', 'concurrent:watchAndServe']);
+
+  /*
+   * Test definition
+   */
+  grunt.registerTask('test', function(name, reporter) {
+    var tasks = ['env:test'];
+
+    if (!name) {
+      grunt.task.run(['test:client', 'test:server']);
+      return;
+    }
+
+    switch(name) {
+    case 'e2e':
+      if (!grunt.config('test.watchedE2E')) {
+        tasks.push('build');
+      }
+      else {
+        grunt.config('test.watchedE2E', false);
+      }
+
+      tasks.push('express:test');
+      tasks.push('protractor:e2e');
+      tasks.push('express:test:stop');
+      grunt.task.run(tasks);
+      return;
+    case 'midway':
+      tasks.push('karma:midway');
+      grunt.task.run(tasks);
+      return;
+    case 'kunit':
+      tasks.push('karma:kunit');
+      grunt.task.run(tasks);
+      return;
+    case 'client':
+      grunt.task.run(['test:e2e', 'test:midway', 'test:kunit']);
+      return;
+    case 'unit':
+      tasks.push('mochaTest:unit');
+      break;
+    case 'func':
+      tasks.push('mochaTest:func');
+      break;
+    case 'server':
+      grunt.task.run(['test:unit', 'test:func']);
+      return;
+    default: grunt.error.fail('Unknown action ' + name);
+    }
+
+    if (reporter) {
+      grunt.config('mochaTest.options', {
+        reporter: reporter,
+      });
+    }
+
+    grunt.task.run(tasks);
+  });
 
   // if changing file, launch the right tools on this file only if possible
   grunt.event.on('watch', function(action, filepath) {
@@ -386,62 +460,6 @@ module.exports = function(grunt) {
       }
       grunt.config('watch.test.tasks', tasks);
     }
-  });
-
-  grunt.registerTask('build', ['clean:all', 'concurrent:build', 'ngtemplates', 'usemin2']);
-  grunt.registerTask('start', ['build', 'env:dev', 'concurrent:watchAndServe']);
-  grunt.registerTask('test', function(name, reporter) {
-    var tasks = ['env:test'];
-
-    if (!name) {
-      grunt.task.run(['test:client', 'test:server']);
-      return;
-    }
-
-    switch(name) {
-    case 'e2e':
-      if (!grunt.config('test.watchedE2E')) {
-        tasks.push('build');
-      }
-      else {
-        grunt.config('test.watchedE2E', false);
-      }
-
-      tasks.push('express:test');
-      tasks.push('protractor:e2e');
-      tasks.push('express:test:stop');
-      grunt.task.run(tasks);
-      return;
-    case 'midway':
-      tasks.push('karma:midway');
-      grunt.task.run(tasks);
-      return;
-    case 'kunit':
-      tasks.push('karma:unit');
-      grunt.task.run(tasks);
-      return;
-    case 'client':
-      grunt.task.run(['test:e2e', 'test:midway', 'test:kunit']);
-      return;
-    case 'unit':
-      tasks.push('mochaTest:unit');
-      break;
-    case 'func':
-      tasks.push('mochaTest:func');
-      break;
-    case 'server':
-      grunt.task.run(['test:unit', 'test:func']);
-      return;
-    default: grunt.error.fail('Unknown action ' + name);
-    }
-
-    if (reporter) {
-      grunt.config('mochaTest.options', {
-        reporter: reporter,
-      });
-    }
-
-    grunt.task.run(tasks);
   });
 
   grunt.registerTask('default', 'start');

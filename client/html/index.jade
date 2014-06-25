@@ -1,21 +1,5 @@
 extends layout/basic
 
 append content
-  #content
 
-    #recipes(ng-controller="RecipeListCtrl")
-      .container-fluid
-        .row
-          .col-md-2
-            p Search:
-              input(ng-model="query")
-            p Sort by:
-              select(ng-model="orderProp")
-                option(value="name") Alphabetical
-                option(value="age") Newest
-
-      .col-md-10
-        ul.recipes
-          li(ng-repeat="recipe in recipes | filter:query | orderBy:orderProp")
-            span {{recipe.name}}
-            p {{recipe.descr}}
+  #content(ng-view)

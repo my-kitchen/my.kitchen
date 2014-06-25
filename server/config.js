@@ -1,10 +1,13 @@
 'use strict';
 
+var path = require('path');
+
 var baseDir = __dirname;
 module.exports = {
   app: {
     fakeApi: true,
-    baseDir: baseDir,
+    apiMockupDir: path.join(baseDir, '/api_mockup'),
+    publicDir: path.join(baseDir, '../public'),
   },
 
   r42: {

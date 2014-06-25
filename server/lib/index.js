@@ -1,6 +1,6 @@
 'use strict';
 
-define(function (express, /*!$route*/ routes, path) {
+define(function (express, /*!$route*/ routes) {
 
   return function(config) {
     var app = express();
@@ -13,7 +13,7 @@ define(function (express, /*!$route*/ routes, path) {
       'text/css': ['css'],
     });
 
-    app.use(express.static(path.join(config.baseDir, '../public'), {
+    app.use(express.static(config.publicDir, {
       maxAge: 0,
       index: '<noindex>', // prevent index from being returned by static
     }));

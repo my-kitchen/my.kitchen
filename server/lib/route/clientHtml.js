@@ -10,7 +10,7 @@ define(function(fs, path) {
 
       try {
         fs.readFile(
-          path.join(config.baseDir, '../public/index.html'),
+          path.join(config.publicDir, '/index.html'),
           function (err, data) {
             if (err) {
               return next(err);

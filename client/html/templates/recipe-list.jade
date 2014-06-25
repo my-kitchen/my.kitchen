@@ -1,0 +1,17 @@
+.container-fluid
+  .row
+    .col-md-2
+      p Search:
+        input(ng-model="query")
+      p Sort by:
+        select(ng-model="orderProp")
+          option(value="name") Alphabetical
+          option(value="age") Newest
+
+.col-md-10
+  ul.recipes
+    li(ng-repeat="recipe in recipes | filter:query | orderBy:orderProp",  class="thumbnail")
+      a(href="#/recipe/{{recipe.id}}", class="thumb")
+        img(ng-src="/img{{recipe.imageUrl}}")
+      a(href="#/recipe/{{recipe.id}}"){{recipe.name}}
+      p {{recipe.descr}}

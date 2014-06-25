@@ -8,11 +8,12 @@ module.exports = function() {
     browsers: ['Chrome'],
     autoWatch: false,
     singleRun: true,
-    
+
     files : [
       // 3rd Party Code
       './bower_components/angular/angular.js',
       './bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
+      './bower_components/angular-route/angular-route.js',
       './test/client/mocha.conf.js',
 
       // App-specific Code
