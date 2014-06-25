@@ -3,11 +3,16 @@
 var h = require('..');
 h.r42.inject(function (_, /*!lib*/ app, requestFn, fs, path) {
 
+  var config = {
+    publicDir: path.join(__dirname, '../mock/public'),
+    apiMockupDir: path.join(__dirname, '../mock/api_mockup'),
+  };
+
   describe('API', function() {
     var request;
 
     before(function() {
-      request = requestFn(app(_.merge({}, h.config.app, {
+      request = requestFn(app(_.merge({}, h.config.app, config, {
         fakeApi: false,
       })));
     });
@@ -32,7 +37,7 @@ h.r42.inject(function (_, /*!lib*/ app, requestFn, fs, path) {
           .expect('Content-Type', 'text/html')
           .end(h.dotry(function(err, res) {
             expect(err).to.not.exist;
-            fs.readFile(path.join(__dirname, '../../../public/index.html'), {
+            fs.readFile(path.join(config.publicDir, '/index.html'), {
               encoding: 'utf-8',
             }, h.dotry(function (err, data) {
               expect(err).to.not.exist;
@@ -59,7 +64,7 @@ h.r42.inject(function (_, /*!lib*/ app, requestFn, fs, path) {
     var request;
 
     before(function() {
-      request = requestFn(app(_.merge({}, h.config.app, {
+      request = requestFn(app(_.merge({}, h.config.app, config, {
         fakeApi: true,
       })));
     });
@@ -95,7 +100,7 @@ h.r42.inject(function (_, /*!lib*/ app, requestFn, fs, path) {
           .expect('Content-Type', 'application/json; charset=utf-8')
           .end(h.dotry(function(err, res) {
             expect(err).to.not.exist;
-            fs.readFile(path.join(__dirname, '../../../server/api_mockup/GET.json'), {
+            fs.readFile(path.join(config.apiMockupDir, '/GET.json'), {
               encoding: 'utf-8',
             }, h.dotry(function (err, data) {
               expect(err).to.not.exist;

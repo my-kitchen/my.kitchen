@@ -7,7 +7,7 @@ define(function(_, fs, path) {
       app.all('/api/*', function (req, res, next) {
         try {
           fs.readFile(
-            path.join(config.baseDir, 'api_mockup', _.values(req.params).join('/'), req.method + '.json'),
+            path.join(config.apiMockupDir, _.values(req.params).join('/'), req.method + '.json'),
             function (err, data) {
               if (err) {
                 return next(err);

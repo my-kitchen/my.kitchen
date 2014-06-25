@@ -7,5 +7,5 @@ r42.inject(function (/*!lib*/ app) {
   var server = app(config.app).listen(process.env.NODE_PORT);
   console.log('Listening on port ' +
     process.env.NODE_PORT + ' - ' +
-    process.env.NODE_ENV || 'dev' + ' mode');
+    process.env.NODE_ENV + ' mode');
 });

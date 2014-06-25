@@ -41,7 +41,7 @@ unit.inject(function (/*!lib/route/api*/ apiFn, express, fs, path) {
     describe('in fakeApi conf', function() {
       var config = {
         fakeApi: true,
-        baseDir: h.config.r42.baseDir,
+        apiMockupDir: 'apiMockupDir',
       };
 
       before(function() {
@@ -57,8 +57,7 @@ unit.inject(function (/*!lib/route/api*/ apiFn, express, fs, path) {
         it('create a path from req.params', function() {
           expect(path.join).to.have.been.calledOnce
             .and.calledWith(
-              config.baseDir,
-              'api_mockup',
+              config.apiMockupDir,
               'param1/param2',
               'GET.json'
             );

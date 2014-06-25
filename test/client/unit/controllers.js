@@ -28,4 +28,7 @@ describe('MyKitchen controllers', function() {
       expect(scope.orderProp).to.equal('age');
     }));
   });
+
+  describe('RecipeDetailCtrl', function() {
+  });
 });
