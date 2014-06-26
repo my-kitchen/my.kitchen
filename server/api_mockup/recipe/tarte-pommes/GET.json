@@ -1,0 +1,44 @@
+{
+  "name": "Tarte aux pommes",
+  "descr": "Tarte aux pommes normandes avec une garniture crème et amandes",
+  "age": 2,
+  "id": "tarte-pommes",
+  "imageUrl": "/recipe/tarte-pommes.jpg",
+  "difficulty": "Facile",
+  "categories": ["Dessert", "Tarte"],
+  "keywords": ["Pomme"],
+  "cost": "Bon marché",
+  "cookTime": "25",
+  "heatTime": "30",
+  "nominalQty": 6,
+  "ingredients": {
+    "pate-brisee": {
+      "qty": 17,
+      "unit": "u",
+      "rel": {
+        "type": "recipe",
+        "id": "pate-brisee"
+      }
+    },
+    "apple": {
+      "qty": 600,
+      "unit": "u",
+      "type": "golden"
+    },
+    "sugar": {
+      "qty": 17,
+      "unit": "sachet",
+      "type": "vanilla"
+    },
+    "butter": {
+      "qty": 500,
+      "unit": "g"
+    }
+  },
+  "ustensiles": {
+    "knife": 1,
+    "tarte-plate": 1
+  },
+  "steps": {},
+  "rel": []
+}

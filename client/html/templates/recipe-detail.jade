@@ -1,2 +1,49 @@
-p TBD: detail view for :
-  span {{recipeId}}
+.col-md-10
+  h1 {{recipe.name}}
+
+  p {{recipe.descr}}
+
+  ul.recipe-thumbs
+    li
+      img(ng-src="/img{{recipe.imageUrl}}")
+    li(ng-repeat="img in recipe.rel")
+      img(ng-src="/img{{img.src}}")
+
+  ul.specs
+    li
+      span Informations générales
+      dl
+        dt Difficulté
+        dd {{recipe.difficulty}}
+        dt Coût
+        dd {{recipe.cost}}
+        dt Temps de préparation
+        dd {{recipe.cookTime + ' min'}}
+        dt Temps de cuisson
+        dd {{recipe.heatTime + ' min'}}
+
+    li
+      span Classification
+      dl
+        dt Catégories
+        dd(ng-repeat="category in recipe.categories") {{category}}
+        dt Mots-clés
+        dd(ng-repeat="keyword in recipe.keywords") {{keyword}}
+
+    li
+      span Ingrédients (pour {{recipe.nominalQty}} personnes)
+      dl(ng-repeat="(ingredientName, ingredient) in recipe.ingredients")
+        dt {{ingredientName}}
+        dd {{(ingredient.qty.from || ingredient.qty) * recipe.nominalQty / 100 + ' ' + ingredient.unit}}
+
+    li
+      span Ustensiles (pour {{recipe.nominalQty}} personnes)
+      dl(ng-repeat="(ustensileName, ustensile) in recipe.ustensiles")
+        dt {{ustensileName}}
+        dd {{ustensile.qty || ustensile}}
+
+    li
+      span Etapes
+      dl(ng-repeat="step in recipe.steps")
+        dt {{step}}
+        dd {{step}}

@@ -1,0 +1,59 @@
+{
+  "name": "Mousse au chocolat",
+  "descr": "Mousse légère au goût de chocolat noir",
+  "age": 1,
+  "id": "mousse-chocolat",
+  "imageUrl": "/recipe/mousse-chocolat.jpg",
+  "difficulty": "Facile",
+  "categories": ["Dessert", "Mousse"],
+  "keywords": ["Chocolat"],
+  "cost": "Bon marché",
+  "cookTime": "30",
+  "heatTime": "10",
+  "nominalQty": 8,
+  "ingredients": {
+    "chocolate": {
+      "qty": {
+        "from": 3125,
+        "to": 3750
+      },
+      "unit": "g",
+      "type": "black"
+    },
+    "egg": {
+      "qty": 75,
+      "unit": "u"
+    },
+    "white-cheese": {
+      "qty": 100,
+      "unit": "cs"
+    },
+    "sugar": {
+      "qty": {
+        "from": 1215,
+        "to": 1875
+      },
+      "unit": "g"
+    },
+    "gelatine": {
+      "qty": 37.5,
+      "unit": "feuilles"
+    }
+  },
+  "ustensiles": {
+    "saladier": 1,
+    "ramequin": {
+      "qty": "person"
+    }
+  },
+  "steps": {},
+  "rel": [{
+    "type": "image",
+    "id": "",
+    "src": "/recipe/mousse-chocolat/1.jpeg"
+  }, {
+    "type": "image",
+    "id": "",
+    "src": "/recipe/mousse-chocolat/2.jpg"
+  }]
+}

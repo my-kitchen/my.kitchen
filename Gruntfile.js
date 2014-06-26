@@ -367,35 +367,34 @@ module.exports = function(grunt) {
    * Test definition
    */
   grunt.registerTask('test', function(name, reporter) {
-    var tasks = ['env:test'];
-
     if (!name) {
       grunt.task.run(['test:client', 'test:server']);
       return;
     }
 
-    switch(name) {
-    case 'e2e':
-      if (!grunt.config('test.watchedE2E')) {
+    var tasks = ['env:test'];
+
+    if (_.contains(['e2e', 'midway', 'kunit'], name)) {
+      if (!grunt.config('test.watched')) {
         tasks.push('build');
       }
       else {
-        grunt.config('test.watchedE2E', false);
+        grunt.config('test.watched', false);
       }
+    }
 
+    switch(name) {
+    case 'e2e':
       tasks.push('express:test');
       tasks.push('protractor:e2e');
       tasks.push('express:test:stop');
-      grunt.task.run(tasks);
-      return;
+      break;
     case 'midway':
       tasks.push('karma:midway');
-      grunt.task.run(tasks);
-      return;
+      break;
     case 'kunit':
       tasks.push('karma:kunit');
-      grunt.task.run(tasks);
-      return;
+      break;
     case 'client':
       grunt.task.run(['test:e2e', 'test:midway', 'test:kunit']);
       return;
@@ -411,7 +410,7 @@ module.exports = function(grunt) {
     default: grunt.error.fail('Unknown action ' + name);
     }
 
-    if (reporter) {
+    if (_.contains(['unit', 'func'], name) && reporter) {
       grunt.config('mochaTest.options', {
         reporter: reporter,
       });
@@ -447,9 +446,9 @@ module.exports = function(grunt) {
         }
       }
       else {
+        grunt.config('test.watched', true);
         if (filepath.match('^test/client/e2e')) {
           tasks[1] = 'test:e2e';
-          grunt.config('test.watchedE2E', true);
         }
         else if (filepath.match('^test/client/midway')) {
           tasks[1] = 'test:midway';

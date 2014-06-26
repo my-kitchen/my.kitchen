@@ -1,0 +1,39 @@
+{
+  "name": "Moelleux au chocolat",
+  "descr": "Tendre et mousseux, ce gâteau révèle la force du chocolat noir",
+  "age": 12,
+  "id": "moelleux-chocolat",
+  "imageUrl": "/recipe/moelleux-chocolat.jpg",
+  "difficulty": "Très facile",
+  "categories": ["Dessert", "Gateau"],
+  "keywords": ["Chocolat"],
+  "cost": "Bon marché",
+  "cookTime": "25",
+  "heatTime": "40",
+  "nominalQty": 8,
+  "ingredients": {
+    "butter": {
+      "qty": 1875,
+      "unit": "g"
+    },
+    "sugar": {
+      "qty": 1562,
+      "unit": "g"
+    },
+    "flour": {
+      "qty": 1000,
+      "unit": "g"
+    },
+    "egg": {
+      "qty": 75,
+      "unit": "u"
+    },
+    "chocolate": {
+      "qty": 3333,
+      "unit": "g"
+    }
+  },
+  "ustensiles": {},
+  "steps": {},
+  "rel": []
+}

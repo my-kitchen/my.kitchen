@@ -1,0 +1,65 @@
+{
+  "name": "Tarte au citron meringuée",
+  "descr": "Tarte à la crème de citron recouverte d'une meringue à l'italienne légèrement brûlée",
+  "age": 3,
+  "id": "tarte-citron",
+  "imageUrl": "/recipe/tarte-citron.jpg",
+  "difficulty": "Facile",
+  "categories": ["Dessert", "Tarte", "Tarte au citron"],
+  "keywords": ["Citron"],
+  "cost": "Bon marché",
+  "cookTime": "30",
+  "heatTime": "30",
+  "nominalQty": 6,
+  "ingredients": {
+    "pate-brisee": {
+      "qty": 17,
+      "unit": "u",
+      "rel": {
+        "type": "recipe",
+        "id": "pate-brisee"
+      }
+    },
+    "lemon": {
+      "qty": 50,
+      "unit": "u"
+    },
+    "egg": {
+      "qty": 30,
+      "unit": "u",
+      "part": "yellow"
+    },
+    "cream": {
+      "qty": 330,
+      "unit": "cl"
+    },
+    "sugar": {
+      "qty": 3660,
+      "unit": "g"
+    },
+    "fecule": {
+      "qty": 33,
+      "unit": "cs"
+    },
+    "egg": {
+      "qty": 50,
+      "unit": "u",
+      "part": "white"
+    },
+    "sugar": {
+      "qty": 2500,
+      "unit": "g",
+      "type": "glace"
+    }
+  },
+  "ustensiles": {
+    "saladier": 1,
+    "tarte-plate": 1
+  },
+  "steps": {},
+  "rel": [{
+    "type": "image",
+    "id": "",
+    "src": "/recipe/tarte-citron/1.jpg"
+  }]
+}
