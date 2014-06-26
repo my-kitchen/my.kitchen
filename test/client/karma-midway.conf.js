@@ -13,9 +13,5 @@ module.exports = function(config) {
     './test/client/midway/**/*.js'
   ]);
 
-  conf.proxies = {
-    '/': 'http://localhost:9999/'
-  };
-
   config.set(conf);
 };

@@ -1,0 +1,44 @@
+{
+  "name": "Madeleine",
+  "descr": "A l'eau de fleur d'oranger, au citron ou à la pâte d'amande, la madeleine doit son moelleux à sa forme unique",
+  "age": 4,
+  "id": "madeleine",
+  "imageUrl": "/recipe/madeleine.jpg",
+  "difficulty": "Très facile",
+  "categories": ["Dessert"],
+  "keywords": [],
+  "cost": "Bon marché",
+  "cookTime": "10",
+  "heatTime": "10",
+  "nominalQty": 6,
+  "ingredients": {
+    "flour": {
+      "qty": 2500,
+      "unit": "g"
+    },
+    "egg": {
+      "qty": 33.33,
+      "unit": "u"
+    },
+    "sugar": {
+      "qty": 1666,
+      "unit": "g"
+    },
+    "butter": {
+      "qty": 2083,
+      "unit": "g"
+    },
+    "lemon": {
+      "qty": 16.66,
+      "unit": "u",
+      "part": "zeste"
+    },
+    "levure": {
+      "qty": 16.66,
+      "unit": "pincee"
+    }
+  },
+  "ustensiles": {},
+  "steps": {},
+  "rel": []
+}

@@ -5,8 +5,8 @@ describe('MyKitchen', function() {
   it('redirect index.html to index.html#/phones', function() {
     browser.get('index.html');
     browser.getLocationAbsUrl().then(function(url) {
-        expect(url.split('#')[1]).to.equal('/recipe');
-      });
+      expect(url.split('#')[1]).to.equal('/recipe');
+    });
   });
 
   describe('Recipe list view', function() {
@@ -57,7 +57,7 @@ describe('MyKitchen', function() {
       var query = element(by.model('query'));
 
       query.sendKeys('pommes');
-      element(by.css('.recipes li a')).click();
+      element.all(by.css('.recipes li a')).first().click();
       browser.getLocationAbsUrl().then(function(url) {
         expect(url.split('#')[1]).to.equal('/recipe/tarte-pommes');
       });
@@ -69,8 +69,8 @@ describe('MyKitchen', function() {
       browser.get('index.html#/recipe/mousse-chocolat');
     });
 
-    it('display placeholder page with recipeId', function() {
-      expect(element(by.binding('recipeId')).getText()).to.eventually.equal('mousse-chocolat');
+    it('display mousse-chocolat page', function() {
+      expect(element(by.binding('recipe.name')).getText()).to.eventually.equal('Mousse au chocolat');
     });
   });
 });
