@@ -4,6 +4,7 @@
   "description": "my.kitchen cook universe site",
   "main": "server/server.js",
   "author": "Virginie BARDALES <virginie.bardales@gmail.com>",
+  "license": "LGPL",
   "repository": {
     "type": "git",
     "url": "https://github.com/my-kitchen/my.kitchen.git"
