@@ -246,12 +246,12 @@ module.exports = function(grunt) {
      * Launching tools
      */
     // declare environments
-    env : {
-      dev : {
+    env: {
+      dev: {
         NODE_ENV: 'development',
         NODE_PORT: 8000,
       },
-      test : {
+      test: {
         NODE_ENV: 'test',
         NODE_PORT: 9000,
       },
@@ -282,14 +282,14 @@ module.exports = function(grunt) {
           spawn: false,
         },
         files: 'client/js/**/*.js',
-        tasks: ['jshint:jsclient', 'test:client'],
+        tasks: ['jshint:jsclient', 'jscs:jsclient', 'test:client'],
       },
       jsserver: {
         options: {
           spawn: false,
         },
         files: 'server/**/*.js',
-        tasks: ['jshint:jsserver', 'test:server'],
+        tasks: ['jshint:jsserver', 'jscs:jsserver', 'test:server'],
       },
       img: {
         files: 'client/img/**/*',
@@ -303,7 +303,7 @@ module.exports = function(grunt) {
       },
       grunt: {
         files: ['Gruntfile.js', 'package.json'],
-        tasks: ['jshint:grunt'],
+        tasks: ['jshint:grunt', 'jscs:grunt'],
         options: {
           reload: true,
         },
@@ -313,7 +313,7 @@ module.exports = function(grunt) {
           spawn: false,
         },
         files: 'test/**/*.js',
-        tasks: ['jshint:test', 'test'],
+        tasks: ['jshint:test', 'jscs:test', 'test'],
       },
     },
 
@@ -321,6 +321,8 @@ module.exports = function(grunt) {
     jshint: {
       options: {
         jshintrc: 'server/.jshintrc',
+        reporter: require('jshint-stylish'),
+        verbose: true,
       },
       jsclient: {
         src: 'client/js/**/*.js',
@@ -339,6 +341,22 @@ module.exports = function(grunt) {
         options: {
           jshintrc: 'test/.jshintrc',
         },
+      },
+    },
+
+    // check js code style too
+    jscs: {
+      jsclient: {
+        src: 'client/js/**/*.js',
+      },
+      jsserver: {
+        src: 'server/**/*.js',
+      },
+      grunt: {
+        src: 'Gruntfile.js',
+      },
+      test: {
+        src: 'test/**/*.js',
       },
     },
 
@@ -383,7 +401,7 @@ module.exports = function(grunt) {
       }
     }
 
-    switch(name) {
+    switch (name) {
     case 'e2e':
       tasks.push('express:test');
       tasks.push('protractor:e2e');
@@ -423,16 +441,19 @@ module.exports = function(grunt) {
   grunt.event.on('watch', function(action, filepath) {
     if (filepath.match('^server/')) {
       grunt.config('jshint.jsserver.src', filepath);
+      grunt.config('jscs.jsserver.src', filepath);
       return;
     }
 
     if (filepath.match('^client/')) {
       grunt.config('jshint.jsclient.src', filepath);
+      grunt.config('jscs.jsclient.src', filepath);
       return;
     }
 
     if (filepath.match('^test/')) {
       grunt.config('jshint.test.src', filepath);
+      grunt.config('jscs.test.src', filepath);
 
       var tasks = grunt.config('watch.test.tasks');
       if (filepath.match('^test/server')) {

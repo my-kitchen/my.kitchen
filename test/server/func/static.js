@@ -21,7 +21,7 @@ h.r42.inject(function (_, /*!lib*/ app, requestFn, fs, path) {
         .expect(200, done);
     });
 
-    describe('GET /css/exist.css static file', function(done) {
+    describe('GET /css/exist.css static file', function() {
       it('has a max-age of 0', function(done) {
         request
           .get('/css/exist.css')

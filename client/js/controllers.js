@@ -9,11 +9,14 @@ recipeControllers.controller('RecipeListCtrl', ['$scope', '$http',
     });
 
     $scope.orderProp = 'age';
-  }]);
+  }
+]);
 
-recipeControllers.controller('RecipeDetailCtrl', ['$scope', '$routeParams', '$http',
+recipeControllers.controller('RecipeDetailCtrl', [
+  '$scope', '$routeParams', '$http',
   function($scope, $routeParams, $http) {
     $http.get('api/recipe/' + $routeParams.recipeId).success(function(data) {
       $scope.recipe = data;
     });
-  }]);
+  }]
+);

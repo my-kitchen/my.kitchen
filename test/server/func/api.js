@@ -23,7 +23,7 @@ h.r42.inject(function (_, /*!lib*/ app, requestFn, fs, path) {
         .expect(200, done);
     });
 
-    describe('GET / route', function(done) {
+    describe('GET / route', function() {
       it('has no cache', function(done) {
         request
           .get('/')
