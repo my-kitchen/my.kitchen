@@ -1,4 +1,11 @@
-// An example configuration file.
+'use strict';
+
+var chai = require('chai');
+chai.config.includeStack = true;
+chai.use(require('sinon-chai'));
+chai.use(require('chai-as-promised'));
+global.expect = chai.expect;
+
 exports.config = {
   chromeOnly: true,
   chromeDriver: '../../node_modules/protractor/selenium/chromedriver',
