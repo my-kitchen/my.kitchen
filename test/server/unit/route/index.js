@@ -8,7 +8,7 @@ var unit = h.r42.createSub({
   },
 });
 unit.inject(function (_, /*!lib/route*/ routeFn, /*!lib/route/api*/ api, /*!lib/route/clientHtml*/ clientHtml) {
-  
+
   describe('Route', function() {
     beforeEach(function() {
       api.reset();

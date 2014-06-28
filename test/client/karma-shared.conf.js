@@ -9,7 +9,7 @@ module.exports = function() {
     autoWatch: false,
     singleRun: true,
 
-    files : [
+    files: [
       // 3rd Party Code
       './bower_components/angular/angular.js',
       './bower_components/angular-bootstrap/ui-bootstrap-tpls.js',

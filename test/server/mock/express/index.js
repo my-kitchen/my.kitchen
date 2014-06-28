@@ -16,7 +16,9 @@ var Express = function() {
   Express.called = true;
   Express.$i = this;
 
-  var req, res, next;
+  var req;
+  var res;
+  var next;
 
   // use
   this.use = sinon.spy();
