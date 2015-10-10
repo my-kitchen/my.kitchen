@@ -1,0 +1,49 @@
+
+<div class="col-md-10">
+  <h1>{{recipe.name}}</h1>
+  <p>{{recipe.descr}}</p>
+  <ul class="recipe-thumbs">
+    <li><img ng-src="/img{{recipe.imageUrl}}"></li>
+    <li ng-repeat="img in recipe.rel"><img ng-src="/img{{img.src}}"></li>
+  </ul>
+  <ul class="specs">
+    <li><span>Informations générales</span>
+      <dl>
+        <dt>Difficulté</dt>
+        <dd>{{recipe.difficulty}}</dd>
+        <dt>Coût</dt>
+        <dd>{{recipe.cost}}</dd>
+        <dt>Temps de préparation</dt>
+        <dd>{{recipe.cookTime + ' min'}}</dd>
+        <dt>Temps de cuisson</dt>
+        <dd>{{recipe.heatTime + ' min'}}</dd>
+      </dl>
+    </li>
+    <li><span>Classification</span>
+      <dl>
+        <dt>Catégories</dt>
+        <dd ng-repeat="category in recipe.categories">{{category}}</dd>
+        <dt>Mots-clés</dt>
+        <dd ng-repeat="keyword in recipe.keywords">{{keyword}}</dd>
+      </dl>
+    </li>
+    <li><span>Ingrédients (pour {{recipe.nominalQty}} personnes)</span>
+      <dl ng-repeat="(ingredientName, ingredient) in recipe.ingredients">
+        <dt>{{ingredientName}}</dt>
+        <dd>{{(ingredient.qty.from || ingredient.qty) * recipe.nominalQty / 100 + ' ' + ingredient.unit}}</dd>
+      </dl>
+    </li>
+    <li><span>Ustensiles (pour {{recipe.nominalQty}} personnes)</span>
+      <dl ng-repeat="(ustensileName, ustensile) in recipe.ustensiles">
+        <dt>{{ustensileName}}</dt>
+        <dd>{{ustensile.qty || ustensile}}</dd>
+      </dl>
+    </li>
+    <li><span>Etapes</span>
+      <dl ng-repeat="step in recipe.steps">
+        <dt>{{step}}</dt>
+        <dd>{{step}}</dd>
+      </dl>
+    </li>
+  </ul>
+</div>
