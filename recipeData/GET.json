@@ -1,0 +1,91 @@
+[{
+  "name": "Mousse au chocolat",
+  "description": "Mousse légère au goût de chocolat noir",
+  "likes": 1,
+  "id": "mousse-chocolat",
+  "imageUrl": "/recipe/mousse-chocolat.jpg"
+}, {
+  "name": "Tarte au citron meringuée",
+  "description": "Tarte à la crème de citron recouverte d'une meringue à l'italienne légèrement brûlée",
+  "likes": 3,
+  "id": "tarte-citron",
+  "imageUrl": "/recipe/tarte-citron.jpg"
+}, {
+  "name": "Tarte aux pommes",
+  "description": "Tarte aux pommes normandes avec une garniture crème et amandes",
+  "likes": 2,
+  "id": "tarte-pommes",
+  "imageUrl": "/recipe/tarte-pommes.jpg"
+}, {
+  "name": "Sorbet fraise",
+  "description": "Sorbet aux fraises fraiches avec du jus de citron et une touche de menthe rafraichissante",
+  "likes": 5,
+  "id": "sorbet-fraise",
+  "imageUrl": "/recipe/sorbet-fraise.jpeg"
+}, {
+  "name": "Sablés à la cannelle",
+  "description": "Des petites bouchées de sablés tout rond, avec une pointe de cannelle, à croquer ou à laisser fondre",
+  "likes": 6,
+  "id": "sable-cannelle",
+  "imageUrl": "/recipe/sable-cannelle.jpg"
+}, {
+  "name": "Millefeuille",
+  "description": "Une crème patissière cloisonnée entre des tranches croustillantes et légères de pâte feuilletée et recouvert d'un glaçage au sucre",
+  "likes": 7,
+  "id": "millefeuille",
+  "imageUrl": "/recipe/millefeuille.png"
+}, {
+  "name": "Pâte d'amande",
+  "description": "Des amandes, du beurre et du jaune d'oeuf agrémenté de colorant pour façonner tous les décors possibles et imaginables",
+  "likes": 8,
+  "id": "pate-amande",
+  "imageUrl": "/recipe/pate-amande.jpg"
+}, {
+  "name": "Galette des rois",
+  "description": "La célèbre galette de début d'année, pour l'épiphanie. Fourrée à la crème d'amande, cette galette à la pâte feuilletée délicatement dorée au jaune d'oeuf contient la célèbre fêve",
+  "likes": 9,
+  "id": "galette-rois",
+  "imageUrl": "/recipe/galette-rois.jpg"
+}, {
+  "name": "Ile flottante",
+  "description": "Du blanc d'oeuf au caramel flottant sur une mer de crème anglaise à la vanille bourbon",
+  "likes": 10,
+  "id": "ile-flottante",
+  "imageUrl": "/recipe/ile-flottante.jpg"
+}, {
+  "name": "Forêt noire",
+  "description": "Inspirée des forêts des Vosges, ce gâteau aux copeaux de chocolat et à la crème chantilly est fourré à la cerise et au kirch",
+  "likes": 11,
+  "id": "foret-noire",
+  "imageUrl": "/recipe/foret-noire.jpg"
+}, {
+  "name": "Moelleux au chocolat",
+  "description": "Tendre et mousseux, ce gâteau révèle la force du chocolat noir",
+  "likes": 12,
+  "id": "moelleux-chocolat",
+  "imageUrl": "/recipe/moelleux-chocolat.jpg"
+}, {
+  "name": "Gâteau marbré",
+  "description": "Ce marbré vanille chocolat à la texture aérée et légère est un classique",
+  "likes": 13,
+  "id": "gateau-marbre",
+  "imageUrl": "/recipe/gateau-marbre.jpeg"
+}, {
+  "name": "Crêpe",
+  "description": "Reines à la chandeleur, les crèpes sont légères et fines, contrairement aux pancakes",
+  "likes": 14,
+  "id": "crepe",
+  "imageUrl": "/recipe/crepe.jpg"
+}, {
+  "name": "Gaufre",
+  "description": "Liégeoises, elles sont tendres et caramélisées avec un peu de cassonade",
+  "likes": 15,
+  "id": "gaufre",
+  "imageUrl": "/recipe/gaufre.jpg"
+}, {
+  "name": "Madeleine",
+  "description": "A l'eau de fleur d'oranger, au citron ou à la pâte d'amande, la madeleine doit son moelleux à sa forme unique",
+  "likes": 4,
+  "id": "madeleine",
+  "imageUrl": "/recipe/madeleine.jpg"
+}]

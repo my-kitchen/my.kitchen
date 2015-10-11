@@ -87,10 +87,9 @@ gulp.task('watch', ['build'], function() {
 })
 gulp.task('serve', ['build', 'watch'], function() {
   nodemon({
-    script: 'server/server.js',
+    script: 'server',
     env: {
-      NODE_ENV: 'development',
-      NODE_PORT: 8000
+      NODE_ENV: 'development'
     },
   });
 }, []);
