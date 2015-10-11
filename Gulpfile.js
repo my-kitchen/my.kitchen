@@ -16,8 +16,8 @@ gulp.task('clean', function() {
 var copyCss = glou
 .src({buffer: false}, [
   'client/**/*.css',
-  'node_modules/bootstrap/dist/css/bootstrap.min.css',
-  'node_modules/font-awesome/css/font-awesome.min.css'
+  'node_modules/bootstrap/dist/css/bootstrap.css',
+  'node_modules/font-awesome/css/font-awesome.css'
   ])
 .dest({log: false}, 'public/css')
 ;
@@ -36,8 +36,8 @@ var copyFonts = glou
 ;
 
 var copyJs = glou
-.src(['node_modules/angular/angular.min.js',
-  'node_modules/angular-route/angular-route.min.js',
+.src(['node_modules/angular/angular.js',
+  'node_modules/angular-route/angular-route.js',
   'client/**/*.js',
   '!client/app.js',
   ])
