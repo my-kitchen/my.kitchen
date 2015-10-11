@@ -2,17 +2,16 @@
 
 angular.module('myKitchen', [
   'ngRoute',
-  'recipeControllers',
   ])
 .config(function($routeProvider) {
   $routeProvider
   .when('/recipe', {
-    templateUrl: 'templates/recipe-list.html',
-    controller: 'RecipeListCtrl',
+    templateUrl: 'home/recipe-list.html',
+    controller: 'RecipeListController',
   })
   .when('/recipe/:recipeId', {
-    templateUrl: 'templates/recipe-detail.html',
-    controller: 'RecipeDetailCtrl',
+    templateUrl: 'recipeDetail/recipe-detail.html',
+    controller: 'RecipeDetailController',
   })
   .otherwise({
     redirectTo: '/recipe',

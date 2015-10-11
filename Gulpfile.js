@@ -5,6 +5,7 @@ var gulp = require('gulp');
 var ngTemplates = require('gulp-ng-templates');
 var ngAnnotate = require('gulp-ng-annotate');
 var nodemon = require('gulp-nodemon');
+var Server = require('./server');
 
 gulp.task('clean', function() {
   return del([
@@ -14,7 +15,7 @@ gulp.task('clean', function() {
 
 var copyCss = glou
 .src({buffer: false}, [
-  'client/css/*.css',
+  'client/**/*.css',
   'node_modules/bootstrap/dist/css/bootstrap.min.css',
   'node_modules/font-awesome/css/font-awesome.min.css'
   ])
@@ -22,7 +23,7 @@ var copyCss = glou
 ;
 
 var copyStatic = glou
-.src({buffer: false}, ['client/static/**/*', '!client/js/app.js'])
+.src({buffer: false}, ['client/static/**/*'])
 .dest({log: false}, 'public/static')
 ;
 
@@ -37,8 +38,8 @@ var copyFonts = glou
 var copyJs = glou
 .src(['node_modules/angular/angular.min.js',
   'node_modules/angular-route/angular-route.min.js',
-  'client/js/**/*.js',
-  '!client/js/app.js',
+  'client/**/*.js',
+  '!client/app.js',
   ])
 .pipe(ngAnnotate)
 .dest({log: false}, 'public/js')
@@ -46,7 +47,7 @@ var copyJs = glou
 
 var copyApp = glou
 .src({buffer: false}, [
-  'client/js/app.js',
+  'client/app.js',
   ])
 .pipe(ngAnnotate)
 .dest({log: false}, 'public/')
@@ -54,13 +55,13 @@ var copyApp = glou
 
 var copyIndex = glou
 .src({buffer: false}, [
-  'client/html/index.html',
+  'client/index.html',
   ])
 .dest({log: false}, 'public/')
 ;
 
 var templates = glou
-.src(['client/html/**/*.html', '!client/html/index.html'])
+.src(['client/**/*.html', '!client/index.html'])
 .pipe(ngTemplates, {
   filename: 'templates.js',
   module: 'myKitchen',
@@ -83,26 +84,29 @@ gulp.task('build', function(done) {
   runSequence('clean', 'copy', done);
 });
 gulp.task('default', ['build']);
-gulp.task('watch', ['build'], function() {
+gulp.task('watch', function() {
   glou.watch(['client/**/*'], 'copy');
 });
-gulp.task('serve:api', function(cb) {
-  return nodemon({
-    script: 'server',
-    env: {
-      NODE_ENV: 'development'
-    },
-  }).once('start', cb);
+
+var server = null;
+gulp.task('serve:api', function() {
+  if (!server) {
+    server = new Server('./server/server/server.js');
+  }
+
+  server.restart();
 });
 
-gulp.task('serve:app', function(cb) {
+gulp.task('serve:app', function() {
   return nodemon({
     script: 'static-server/server.js',
     env: {
       NODE_ENV: 'development',
       NODE_PORT: 8000,
     },
-  }).once('start', cb);
+  });
 });
 
-gulp.task('serve', ['build', 'watch', 'serve:api', 'serve:app']);
+gulp.task('serve', function(done) {
+   runSequence('build', 'watch', 'serve:api', 'serve:app', done);
+});

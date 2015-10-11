@@ -13,7 +13,7 @@ express.static.mime.define({
 });
 
 app.get('/', function(req, res) {
-    res.sendfile(path.join(__dirname, '../public/index.html'));
+    res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 app.use(express.static(path.join(__dirname, '../public'), {
   maxAge: 0,

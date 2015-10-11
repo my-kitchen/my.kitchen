@@ -2,9 +2,9 @@
 
 angular.module('myKitchen')
   .constant('apiUrl', 'http://localhost:3000/')
-  .service('Recipes', function($http, $q, apiUrl) {
+  .factory('recipes', function($http, $q, apiUrl) {
     var recipeUrl;
-    return $http.get(apiUrl).then(function(index) {
+    $http.get(apiUrl).then(function(index) {
       recipeUrl = index.recipe;
     });
 
@@ -26,5 +26,5 @@ angular.module('myKitchen')
         });
       },
     };
-  }])
+  })
 ;
