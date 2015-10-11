@@ -1,0 +1,30 @@
+<h1>Recettes!</h1>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <p>Search:
+        <input ng-model="recipes.query">
+      </p>
+      <p>Sort by:
+        <select ng-model="recipes.orderProp">
+          <option value="name">Alphabetical</option>
+          <option value="age">Newest</option>
+        </select>
+      </p>
+    </div>
+  </div>
+</div>
+<div class="col-md-10">
+  <ul class="recipes">
+    <li ng-repeat="recipe in recipes.recipes | filter:recipes.query | orderBy:recipes.orderProp" class="thumbnail">
+      <a ng-href="#/recipes/{{recipe.id}}" class="thumb"><img ng-src="/img{{recipe.imageUrl}}"></a>
+      <a ng-href="#/recipes/{{recipe.id}}">{{recipe.name}}</a>
+      <p>{{recipe.descr}}</p>
+    </li>
+  </ul>
+  <div class="row">
+    <div class="col-md-12">
+      <p ng-bind="recipes.recipes.length + ' ' + (recipes.recipes.length > 1 ? 'recettes' : 'recette')"></p>
+    </div>
+  </div>
+</div>

@@ -63,7 +63,8 @@ var templates = glou
 .src(['client/html/**/*.html', '!client/html/index.html'])
 .pipe(ngTemplates, {
   filename: 'templates.js',
-  module: 'myKitchen'
+  module: 'myKitchen',
+  standalone: false
 })
 .dest({log: false}, 'public/js')
 ;
@@ -84,12 +85,24 @@ gulp.task('build', function(done) {
 gulp.task('default', ['build']);
 gulp.task('watch', ['build'], function() {
   glou.watch(['client/**/*'], 'copy');
-})
-gulp.task('serve', ['build', 'watch'], function() {
-  nodemon({
+});
+gulp.task('serve:api', function(cb) {
+  return nodemon({
     script: 'server',
     env: {
       NODE_ENV: 'development'
     },
-  });
-}, []);
+  }).once('start', cb);
+});
+
+gulp.task('serve:app', function(cb) {
+  return nodemon({
+    script: 'static-server/server.js',
+    env: {
+      NODE_ENV: 'development',
+      NODE_PORT: 8000,
+    },
+  }).once('start', cb);
+});
+
+gulp.task('serve', ['build', 'watch', 'serve:api', 'serve:app']);
