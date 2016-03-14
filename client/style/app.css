@@ -1,9 +1,20 @@
-body {
+/*body {
   padding-top: 20px;
 }
 
+.header {
+  background: #ffffff;
+  position: fixed;
+  min-width: 600px;
+  z-index: 10000;
+  width: 100%;
+  left: 0;
+  top: 0;
+  height: 60px;
+}
+
 /** List View **/
-.recipes {
+/*.recipes {
   list-style: none;
 }
 
@@ -22,7 +33,7 @@ body {
 }
 
 /** Detail View **/
-img.recipe {
+/*img.recipe {
   float: left;
   border: 1px solid black;
   margin-right: 3em;
@@ -75,4 +86,4 @@ ul.specs dt {
 
 h1 {
   border-bottom: 1px solid gray;
-}
+}*/

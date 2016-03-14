@@ -1,0 +1,19 @@
+<div class="container" ng-controller="NewRecipeController as new">
+  <h1>Nouvelle recette</h1>
+  <h2>Ingrédients</h2>
+  <input type="text"
+    typeahead-on-select="new.chooseIngredient()"
+    placeholder="Search your ingredient"
+    uib-typeahead="ingredient in new.searchIngredient($viewValue) | filter:$viewValue | limitTo:8"
+    ahead-loading="loadingLocations"
+    typeahead-no-results="noResults"
+    class="form-control" />
+  <button ng-click="new.createNewIngredient()">Créer un nouvel ingrédient</button>
+  <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+  <div ng-show="noResults">
+    <i class="glyphicon glyphicon-remove"></i> No Results Found
+  </div>
+  <div ng-repeat="posology in new.recipe.posologies">
+    {{posology.ingredient.name}}
+  </div>
+</div>

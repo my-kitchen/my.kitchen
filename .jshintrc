@@ -26,7 +26,7 @@
                                 //   "double" : require double quotes
     "undef"         : true,     // true: Require all non-global variables to be declared (prevents global leaks)
     "unused"        : true,     // true: Require all defined variables be used
-    "strict"        : true,     // true: Requires all functions run in ES5 Strict Mode
+    "strict"        : false,     // true: Requires all functions run in ES5 Strict Mode
     "trailing"      : true,     // true: Prohibit trailing whitespaces
     "maxparams"     : false,    // {int} Max number of formal params allowed per function
     "maxdepth"      : false,    // {int} Max depth of nested blocks (within functions)
@@ -64,7 +64,7 @@
     // Environments
     "browser"       : true,     // Web Browser (window, document, etc)
     "couch"         : false,    // CouchDB
-    "devel"         : false,    // Development/debugging (alert, confirm, etc)
+    "devel"         : true,    // Development/debugging (alert, confirm, etc)
     "dojo"          : false,    // Dojo Toolkit
     "jquery"        : false,    // jQuery
     "mootools"      : false,    // MooTools
@@ -84,7 +84,6 @@
 
     // Custom Globals
     "predef"        : [
-      "angular",
-      "_"
+      "angular"
     ]
 }

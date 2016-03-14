@@ -1,112 +1,99 @@
-var glou = require('glou');
-var del = require('del');
-var runSequence = require('run-sequence');
+'use strict';
+
 var gulp = require('gulp');
-var ngTemplates = require('gulp-ng-templates');
-var ngAnnotate = require('gulp-ng-annotate');
+var runSequence = require('run-sequence');
+var del = require('del');
+var jshint = require('gulp-jshint');
+var jscs = require('gulp-jscs');
+var stylish = require('gulp-jscs-stylish');
+var concat = require('gulp-concat');
 var nodemon = require('gulp-nodemon');
-var Server = require('./server');
+var ngAnnotate = require('gulp-ng-annotate');
+var ngTemplates = require('gulp-ng-templates');
+var htmlmin = require('gulp-htmlmin');
+var protractor = require('gulp-protractor').protractor;
+var webdriverStandalone = require('gulp-protractor').webdriver_standalone;
+var webdriverUpdate = require('gulp-protractor').webdriver_update;
 
-gulp.task('clean', function() {
-  return del([
-    'public/**/*',
-    ]);
-});
+gulp.task('default', ['start']);
 
-var copyCss = glou
-.src({buffer: false}, [
-  'client/**/*.css',
-  'node_modules/bootstrap/dist/css/bootstrap.css',
-  'node_modules/font-awesome/css/font-awesome.css'
-  ])
-.dest({log: false}, 'public/css')
-;
-
-var copyStatic = glou
-.src({buffer: false}, ['client/static/**/*'])
-.dest({log: false}, 'public/static')
-;
-
-var copyFonts = glou
-.src({buffer: false}, [
-  'node_modules/bootstrap/fonts/**/*',
-  'node_modules/font-awesome/fonts/**/*'
-  ])
-.dest({log: false}, 'public/fonts')
-;
-
-var copyJs = glou
-.src(['node_modules/angular/angular.js',
-  'node_modules/angular-route/angular-route.js',
-  'client/**/*.js',
-  '!client/app.js',
-  ])
-.pipe(ngAnnotate)
-.dest({log: false}, 'public/js')
-;
-
-var copyApp = glou
-.src({buffer: false}, [
-  'client/app.js',
-  ])
-.pipe(ngAnnotate)
-.dest({log: false}, 'public/')
-;
-
-var copyIndex = glou
-.src({buffer: false}, [
-  'client/index.html',
-  ])
-.dest({log: false}, 'public/')
-;
-
-var templates = glou
-.src(['client/**/*.html', '!client/index.html'])
-.pipe(ngTemplates, {
-  filename: 'templates.js',
-  module: 'myKitchen',
-  standalone: false
-})
-.dest({log: false}, 'public/js')
-;
-
-var copy = glou.parallel(copyCss, copyStatic, copyFonts, copyJs, copyIndex, copyApp, templates);
-
-glou.task('copy', copy);
-
-gulp.task('clean', function() {
-  return del([
-    'public/**/*',
-    ]);
-});
-
-gulp.task('build', function(done) {
-  runSequence('clean', 'copy', done);
-});
-gulp.task('default', ['build']);
-gulp.task('watch', function() {
-  glou.watch(['client/**/*'], 'copy');
-});
-
-var server = null;
-gulp.task('serve:api', function() {
-  if (!server) {
-    server = new Server('./server/server/server.js');
-  }
-
-  server.restart();
-});
-
-gulp.task('serve:app', function() {
+gulp.task('start', ['build'], function() {
+  gulp.watch('client/**/*', ['codestyle', 'build-app']);
   return nodemon({
-    script: 'static-server/server.js',
-    env: {
-      NODE_ENV: 'development',
-      NODE_PORT: 8000,
-    },
+    script: 'index.js',
+    ext: 'js',
   });
 });
 
-gulp.task('serve', function(done) {
-   runSequence('build', 'watch', 'serve:api', 'serve:app', done);
+gulp.task('clean', function() {
+  return del(['dist/**/*']);
 });
+
+gulp.task('build', function(cb) {
+  runSequence('clean', ['build-lib', 'build-app'], cb);
+});
+
+gulp.task('build-lib', ['build-bootstrap'], function () {
+  return gulp.src([
+      'node_modules/angular/angular.js',
+      'node_modules/angular-ui-router/release/angular-ui-router.js',
+      'node_modules/angular-ui-bootstrap/dist/*',
+      'node_modules/lodash/lodash.js',
+    ])
+    .pipe(gulp.dest('dist/lib/'))
+  ;
+});
+
+gulp.task('build-bootstrap', function () {
+  return gulp.src('node_modules/bootstrap/dist/**/*')
+    .pipe(gulp.dest('dist/lib/bootstrap/'))
+  ;
+});
+
+gulp.task('build-app', ['templates', 'build-js', 'build-static']);
+
+gulp.task('templates', function() {
+  return gulp.src(['client/**/*.html', '!client/index.html'])
+    .pipe(htmlmin({collapseWhitespace: true}))
+    .pipe(ngTemplates({
+      filename: 'templates.js',
+      module: 'myKitchen',
+      standalone: false
+    }))
+    .pipe(gulp.dest('dist/'))
+  })
+;
+
+gulp.task('build-js', ['codestyle'], function () {
+  return gulp.src('client/**/!(*.spec).js')
+    .pipe(ngAnnotate())
+    .pipe(concat('app.js'))
+    .pipe(gulp.dest('dist/'))
+  ;
+});
+
+gulp.task('codestyle', function() {
+  return gulp.src(['client/**/*.js'])
+    .pipe(jshint())
+    .pipe(jscs())
+    .pipe(stylish.combineWithHintResults())
+    .pipe(jshint.reporter('jshint-stylish'));
+});
+
+gulp.task('build-static', function () {
+  return gulp.src(['client/**/!(*.js|*.html)', 'client/index.html', 'client/style/**/*'])
+    .pipe(gulp.dest('dist/'))
+  ;
+});
+
+gulp.task('test', function() {
+  return gulp.src(['client/**/*.spec.js', 'tests/**/*.js'], { read: false })
+    .pipe(protractor({
+      configFile: 'tests/protractor.config.js',
+      args: ['--baseUrl', 'http://localhost:9000']
+    }))
+  ;
+});
+
+gulp.task('webdriverUpdate', webdriverUpdate);
+gulp.task('webdriverStandalone', webdriverStandalone);

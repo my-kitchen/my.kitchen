@@ -1,20 +1,12 @@
 'use strict';
 
 angular.module('myKitchen', [
-  'ngRoute',
-  ])
-.config(function($routeProvider) {
-  $routeProvider
-  .when('/recipe', {
-    templateUrl: 'home/recipe-list.html',
-    controller: 'RecipeListController',
+  'ui.router',
+])
+  .config(function($urlRouterProvider) {
+    $urlRouterProvider.otherwise('/recipes/new');
   })
-  .when('/recipe/:recipeId', {
-    templateUrl: 'recipeDetail/recipe-detail.html',
-    controller: 'RecipeDetailController',
+  .factory('_', function() {
+    return window._;
   })
-  .otherwise({
-    redirectTo: '/recipe',
-  });
-})
 ;
