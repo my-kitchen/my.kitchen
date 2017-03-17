@@ -33,13 +33,18 @@ gulp.task('build', function(cb) {
   runSequence('clean', ['build-lib', 'build-app'], cb);
 });
 
-gulp.task('build-lib', ['build-bootstrap'], function () {
+gulp.task('build-lib', ['build-bootstrap', 'material-bootstrap'], function () {
   return gulp.src([
-      'node_modules/angular/angular.js',
-      'node_modules/angular-ui-router/release/angular-ui-router.js',
-      'node_modules/angular-ui-bootstrap/dist/*',
-      'node_modules/lodash/lodash.js',
-    ])
+    'node_modules/angular/angular.js',
+    'node_modules/angular-ui-router/release/angular-ui-router.js',
+    'node_modules/angular-ui-bootstrap/dist/!(*-csp)*',
+    'node_modules/lodash/lodash.js',
+    'node_modules/angular-spinner/angular-spinner.js',
+    'node_modules/spin.js/spin.js',
+    'node_modules/angular-uuid/angular-uuid.js',
+    'node_modules/i18next/dist/umd/i18next.js',
+    'node_modules/i18next-xhr-backend/dist/umd/i18nextXHRBackend.js',
+  ])
     .pipe(gulp.dest('dist/lib/'))
   ;
 });
@@ -50,6 +55,17 @@ gulp.task('build-bootstrap', function () {
   ;
 });
 
+gulp.task('material-bootstrap', function () {
+  return gulp.src([
+    'node_modules/angular-animate/angular-animate.min.js',
+    'node_modules/angular-aria/angular-aria.min.js',
+    'node_modules/angular-messages/angular-messages.min.js',
+    'node_modules/angular-material/angular-material.min.js',
+    'node_modules/angular-material/angular-material.min.css'
+  ])
+    .pipe(gulp.dest('dist/lib/material/'));
+});
+
 gulp.task('build-app', ['templates', 'build-js', 'build-static']);
 
 gulp.task('templates', function() {
@@ -57,7 +73,7 @@ gulp.task('templates', function() {
     .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(ngTemplates({
       filename: 'templates.js',
-      module: 'myKitchen',
+      module: 'miam',
       standalone: false
     }))
     .pipe(gulp.dest('dist/'))

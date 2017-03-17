@@ -1,4 +1,4 @@
-angular.module('myKitchen')
+angular.module('miam')
   .service('recipes', function($q, Recipe) {
     var currentRecipe = new Recipe();
 

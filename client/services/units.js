@@ -1,4 +1,4 @@
-angular.module('myKitchen')
+angular.module('miam')
   .service('units', function($q, $timeout) {
     this.findAll = function() {
       var deferred = $q.defer();

@@ -1,4 +1,4 @@
-angular.module('myKitchen')
+angular.module('miam')
   .config(function($stateProvider) {
     $stateProvider.state('newRecipe', {
       url: '/recipes/new',

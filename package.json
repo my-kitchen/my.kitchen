@@ -14,8 +14,14 @@
   },
   "dependencies": {
     "angular": "^1.5.0",
+    "angular-animate": "^1.5.3",
+    "angular-aria": "^1.5.3",
+    "angular-material": "^1.0.6",
+    "angular-messages": "^1.5.3",
+    "angular-spinner": "^0.8.1",
     "angular-ui-bootstrap": "^1.2.4",
     "angular-ui-router": "^0.2.18",
+    "angular-uuid": "0.0.2",
     "bootstrap": "^3.3.5",
     "chai": "^3.5.0",
     "chai-as-promised": "^5.2.0",
@@ -32,12 +38,15 @@
     "gulp-nodemon": "^2.0.4",
     "gulp-protractor": "^2.1.0",
     "hapi": "^13.0.0",
+    "i18next": "^2.4.1",
+    "i18next-xhr-backend": "^0.5.3",
     "inert": "^3.2.0",
     "jshint": "^2.9.1",
     "jshint-stylish": "^2.1.0",
     "lodash": "^4.6.1",
     "mocha": "^2.4.5",
     "protractor": "^3.1.1",
-    "run-sequence": "^1.1.5"
+    "run-sequence": "^1.1.5",
+    "spin.js": "^2.3.2"
   }
 }

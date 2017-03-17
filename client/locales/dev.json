@@ -1,0 +1,14 @@
+{
+  "navigation": {
+    "ingredients": {
+      "label": "navigation.ingredients.label",
+      "new": "navigation.ingredients.new"
+    }
+  },
+  "ingredients": {
+    "new": {
+      "name": "ingredients.new.name",
+      "id": "ingredients.new.id"
+    }
+  }
+}

@@ -1,4 +1,4 @@
-angular.module('myKitchen')
+angular.module('miam')
   .factory('Recipe', function(_) {
     var Recipe = function(base) {
       this.posologies = [];

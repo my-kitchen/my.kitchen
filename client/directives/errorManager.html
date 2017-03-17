@@ -1,0 +1,6 @@
+<span class="error-manager"
+  ng-if="error.manager.error">
+  <uib-alert type="danger"
+    close="error.manager.unsetError()"
+    dismiss-on-timeout="18000">{{error.manager.error}}</uib-alert>
+</span>

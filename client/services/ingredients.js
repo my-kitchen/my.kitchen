@@ -1,31 +1,22 @@
-angular.module('myKitchen')
-  .service('ingredients', function($q, $timeout) {
-    this.search = function() {
-      var deferred = $q.defer();
+angular.module('miam')
+  .service('ingredients', function($http, Ingredient) {
+    this.rootUrl = null;
+    urls.getUrl('ingredients').then(function(rootUrl) {
+      this.rootUrl = rootUrl;
+    });
 
-      $timeout(function() {
-        deferred.resolve([
-          {name: 'Chocolat', id: 'http://localhost:9000/ingredients/chocolat'},
-        ]);
+    this.search = function(value) {
+      return urls.getUrl(this.rootUrl, 'search').then(function(url) {
+        return $http.put(url, {
+          terms: value,
+        });
       });
-
-      return deferred.promise;
     };
 
     this.get = function() {
-      var deferred = $q.defer();
-
-      $timeout(function() {
-        deferred.resolve({
-          name: 'Chocolat',
-          id: 'http://localhost:9000/ingredients/chocolat',
-          baseQuantity: 100,
-          units: ['http://localhost:9000/units/g'],
-          qualifiers: [],
-        });
+      return $http.get(this.rootUrl).then(function(ingredient) {
+        return new Ingredient(ingredient);
       });
-
-      return deferred.promise;
     };
   })
 ;
